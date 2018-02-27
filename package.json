@@ -1,0 +1,35 @@
+{
+  "name": "medium-clone",
+  "version": "1.0.0",
+  "description": "a basic medium.com clone",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyage4/Bears-Team-5.git"
+  },
+  "author": "chingu voyage-4, bears team 5",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chingu-voyage4/Bears-Team-5/issues"
+  },
+  "homepage": "https://github.com/chingu-voyage4/Bears-Team-5#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mysql": "^2.15.0"
+  },
+  "engines": {
+    "node": ">=8.9.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "body-parser": "^1.18.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-cli": ">=1.4.0",
+    "webpack": "^4.0.1"
+  }
+}
