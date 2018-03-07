@@ -24,4 +24,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
   },
+  resolve: {
+    modules: ['node_modules'],
+    extensions: ['.js', '.json', '.jsx'],
+  },
 };
