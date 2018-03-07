@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Template from './components/Template';
+import PageHeader from './components/PageHeader';
 
-ReactDOM.render(<Template />, document.getElementById('app'));
+ReactDOM.render(<PageHeader />, document.getElementById('app'));
