@@ -6,18 +6,29 @@ export default class ArticlePage extends React.Component {
     return (
       <div>
         <AuthorDetails
-          imgUrl="https://pixabay.com/get/ea37b1082bf0033ed1584d05fb0938c9bd22ffd41cb3114494f4c67aa1/cock-3207342_1280.png"
+          imgUrl="https://i.imgur.com/hyqmyzn.png"
           authorName="Colonel Cockerel"
           authorDetails="Leader of the Chicken Uprising, sworn enemy of KFC"
         />
         <AuthorDetails
-          imgUrl="https://pixabay.com/get/ea37b1082bf0033ed1584d05fb0938c9bd22ffd41cb3114494f4c67aa1/cock-3207342_1280.png"
+          imgUrl="https://i.imgur.com/hyqmyzn.png"
           authorName="Colonel Cockerel"
           authorDetails="Leader of the Chicken Uprising, sworn enemy of KFC"
         />
         <div>
           <button>Like</button>
         </div>
+        <ul>
+          <li>
+            <a href="#">Suggested Article</a>
+          </li>
+          <li>
+            <a href="#">Suggested Article</a>
+          </li>
+          <li>
+            <a href="#">Suggested Article</a>
+          </li>
+        </ul>
       </div>
     );
   }
