@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const AuthorDetails = props => (
   <div>
@@ -7,5 +8,11 @@ const AuthorDetails = props => (
     <p>{props.authorDetails}</p>
   </div>
 );
+
+AuthorDetails.propTypes = {
+  imgUrl: PropTypes.string.isRequired,
+  authorName: PropTypes.string.isRequired,
+  authorDetails: PropTypes.string.isRequired,
+};
 
 export default AuthorDetails;

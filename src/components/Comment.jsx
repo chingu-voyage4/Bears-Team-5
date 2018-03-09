@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Comment = props => (
   <div>
@@ -9,5 +10,10 @@ const Comment = props => (
     <button>Bookmark</button>
   </div>
 );
+
+Comment.propTypes = {
+  userName: PropTypes.string.isRequired,
+  commentBody: PropTypes.string.isRequired,
+};
 
 export default Comment;
