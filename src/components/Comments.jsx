@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Comment from './Comment';
 
 const Comments = props => (
@@ -8,5 +9,9 @@ const Comments = props => (
     ))}
   </div>
 );
+
+Comments.propTypes = {
+  comments: PropTypes.array.isRequired,
+};
 
 export default Comments;
