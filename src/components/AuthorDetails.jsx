@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 
 const AuthorDetails = props => (
   <div>
-    <img src={props.imgUrl} height="50" width="50" alt="author icon" />
-    <p>{props.name}</p>
-    <p>{props.details === '' ? 'Draft' : props.details}</p>
+    <img src={props.imgUrl} height="50" width="50" alt="user icon" />
+    <p>{props.authorName}</p>
+    <p>{props.authorDetails ? 'Draft' : props.authorDetails}</p>
   </div>
 );
 
 AuthorDetails.propTypes = {
   imgUrl: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  details: PropTypes.string,
+  authorName: PropTypes.string.isRequired,
+  authorDetails: PropTypes.string,
 };
 
 AuthorDetails.defaultProps = {
-  details: '',
+  authorDetails: '',
 };
 
 export default AuthorDetails;
