@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 
 router.get('/user', function (req, res) {
+  // TODO
   res.send({ type: 'GET' });
 });
 
@@ -63,6 +64,7 @@ router.post(
 );
 
 router.put('/user/:id', function (req, res) {
+  // TODO
   res.send({ type: 'PUT' });
 });
 
