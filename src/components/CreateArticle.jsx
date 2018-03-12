@@ -33,6 +33,7 @@ class CreateArticle extends Component {
           <br />
           <textarea
             name="body"
+            placeholder="Tell us your story ..."
             style={{
               border: 'none',
               display: 'block',
