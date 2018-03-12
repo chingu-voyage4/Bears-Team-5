@@ -33,11 +33,7 @@
     "mysql": "^2.15.0",
     "node-sass": "^4.7.2",
     "normalize.css": "^8.0.0",
-<<<<<<< HEAD
-=======
-    "npm": "^5.7.1",
     "prop-types": "^15.6.1",
->>>>>>> 17d830d621a123b0ad9fec6c0979b822181ce2e3
     "react": "16.0.0",
     "react-dom": "16.0.0",
     "sass-loader": "^6.0.6",
