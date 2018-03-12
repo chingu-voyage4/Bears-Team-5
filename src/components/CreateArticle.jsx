@@ -7,6 +7,13 @@ class CreateArticle extends Component {
     articleTitle: '',
   };
 
+  onTitleChange = e => {
+    const value = e.target.value;
+    this.setState({
+      articleTitle: value,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -18,6 +25,7 @@ class CreateArticle extends Component {
           <input
             type="text"
             name="title"
+            onChange={this.onTitleChange}
             placeholder="Title"
             style={{
               border: 'none',
@@ -39,7 +47,7 @@ class CreateArticle extends Component {
               border: 'none',
               display: 'block',
               fontSize: '30px',
-              height: '50px;',
+              height: '50px',
               margin: '0 auto 30px auto',
               padding: '0 10px',
               width: '60%',
