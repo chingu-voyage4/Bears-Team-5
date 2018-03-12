@@ -5,7 +5,7 @@ const AuthorDetails = props => (
   <div>
     <img src={props.imgUrl} height="50" width="50" alt="user icon" />
     <p>{props.name}</p>
-    <p>{props.details ? 'Draft' : props.details}</p>
+    <p>{props.details === '' ? 'Draft' : props.details}</p>
   </div>
 );
 
