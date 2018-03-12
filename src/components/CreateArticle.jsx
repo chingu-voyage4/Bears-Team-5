@@ -14,6 +14,13 @@ class CreateArticle extends Component {
     });
   };
 
+  onBodyChange = e => {
+    const value = e.target.value;
+    this.setState({
+      articleBody: value,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -42,6 +49,7 @@ class CreateArticle extends Component {
           <br />
           <textarea
             name="body"
+            onChange={this.onBodyChange}
             placeholder="Tell us your story ..."
             style={{
               border: 'none',
