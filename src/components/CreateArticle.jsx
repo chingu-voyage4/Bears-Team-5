@@ -29,6 +29,7 @@ class CreateArticle extends Component {
               padding: '0 10px',
               width: '60%',
             }}
+            value={this.state.articleTitle}
           />
           <br />
           <textarea
@@ -43,6 +44,7 @@ class CreateArticle extends Component {
               padding: '0 10px',
               width: '60%',
             }}
+            value={this.state.articleBody}
           />
         </form>
       </div>
