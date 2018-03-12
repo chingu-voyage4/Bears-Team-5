@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PageHeader from './components/PageHeader';
+import ArticlePage from './components/ArticlePage';
 
-ReactDOM.render(<PageHeader />, document.getElementById('app'));
+ReactDOM.render(<ArticlePage />, document.getElementById('app'));
