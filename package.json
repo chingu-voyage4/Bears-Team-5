@@ -4,7 +4,7 @@
   "description": "a basic medium.com clone",
   "main": "index.js",
   "scripts": {
-    "test": "",
+    "test": "mocha tests --timeout 10000",
     "dev-server": "webpack-dev-server --mode development"
   },
   "repository": {
@@ -22,14 +22,17 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-react": "^6.24.1",
+    "bcrypt": "^1.0.3",
     "css-loader": "^0.28.10",
+    "dotenv": "^5.0.1",
     "eslint": "^4.9.0",
     "express": "^4.16.2",
+    "express-validator": "^5.0.3",
+    "body-parser": "^1.18.2",
     "i": "^0.3.6",
     "mysql": "^2.15.0",
     "node-sass": "^4.7.2",
     "normalize.css": "^8.0.0",
-    "npm": "^5.7.1",
     "react": "16.0.0",
     "react-dom": "16.0.0",
     "sass-loader": "^6.0.6",
@@ -37,20 +40,19 @@
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.1.0"
   },
-  "engines": {
-    "node": ">=8.9.4"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-cli": ">=1.4.0",
+    "mocha": "^5.0.4",
+    "supertest": "^3.0.0",
     "webpack": "^4.0.1"
   }
 }
