@@ -4,9 +4,8 @@
   "description": "a basic medium.com clone",
   "main": "index.js",
   "scripts": {
-    "test": "",
-    "dev-server": "webpack-dev-server --mode development",
-    "test": "jest --config=jest.config.json"
+    "test": "jest --config=jest.config.json",
+    "dev-server": "webpack-dev-server --mode development"
   },
   "repository": {
     "type": "git",
@@ -25,6 +24,8 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "eslint": "^4.9.0",
     "express": "^4.16.2",
     "i": "^0.3.6",
@@ -36,6 +37,7 @@
     "prop-types": "^15.6.1",
     "react": "16.0.0",
     "react-dom": "16.0.0",
+    "react-test-renderer": "^16.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.2",
     "webpack": "^4.0.1",
