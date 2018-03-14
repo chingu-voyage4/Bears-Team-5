@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ArticlePage from './components/ArticlePage';
+import CreateArticle from './components/CreateArticle';
 
-ReactDOM.render(<ArticlePage />, document.getElementById('app'));
+ReactDOM.render(<CreateArticle />, document.getElementById('app'));

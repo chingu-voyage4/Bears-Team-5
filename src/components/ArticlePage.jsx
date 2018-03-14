@@ -16,15 +16,15 @@ export default class ArticlePage extends React.Component {
       <div>
         <AuthorDetails
           imgUrl="https://i.imgur.com/hyqmyzn.png"
-          authorName="Colonel Cockerel"
-          authorDetails="Leader of the Chicken Uprising, sworn enemy of KFC"
+          name="Colonel Cockerel"
+          details="Leader of the Chicken Uprising, sworn enemy of KFC"
         />
         <h2>{this.state.article.title}</h2>
         <p>{this.state.article.body}</p>
         <AuthorDetails
           imgUrl="https://i.imgur.com/hyqmyzn.png"
-          authorName="Colonel Cockerel"
-          authorDetails="Leader of the Chicken Uprising, sworn enemy of KFC"
+          name="Colonel Cockerel"
+          details="Leader of the Chicken Uprising, sworn enemy of KFC"
         />
         <div>
           <button>Like</button>
