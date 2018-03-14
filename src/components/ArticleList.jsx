@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LikedArticle from './LikedArticle';
+import ArticleListItem from './ArticleListItem';
 
-const LikedArticles = props => (
+const ArticleList = props => (
   <div>
+    <h2>{props.heading}</h2>
     {props.articles.length === 0
       ? 'You have not liked any articles'
       : props.articles.map((article) => {
           return (
-            <LikedArticle
+            <ArticleListItem
               articleTitle={article.title}
               articleAuthor={article.author}
               articleImg="https://static.pexels.com/photos/65834/pexels-photo-65834.jpeg"
@@ -19,12 +20,13 @@ const LikedArticles = props => (
   </div>
 );
 
-LikedArticles.propTypes = {
-  articles: PropTypes.array
+ArticleList.propTypes = {
+  articles: PropTypes.array,
+  heading: PropTypes.string.isRequired
 };
 
-LikedArticles.defaultProps = {
+ArticleList.defaultProps = {
   articles: []
 };
 
-export default LikedArticles;
+export default ArticleList;

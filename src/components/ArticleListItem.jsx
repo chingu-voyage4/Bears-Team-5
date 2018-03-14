@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AuthorDetails from './AuthorDetails';
 
-const LikedArticle = props => (
+const ArticleListItem = props => (
   <div
     style={{
       border: '1px solid black'
@@ -14,10 +14,10 @@ const LikedArticle = props => (
   </div>
 );
 
-LikedArticle.propTypes = {
+ArticleListItem.propTypes = {
   articleTitle: PropTypes.string.isRequired,
   articleAuthor: PropTypes.string.isRequired,
   articleImg: PropTypes.string.isRequired
 };
 
-export default LikedArticle;
+export default ArticleListItem;
