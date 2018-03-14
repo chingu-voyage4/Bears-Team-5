@@ -10,13 +10,14 @@ const AuthorDetails = props => (
 );
 
 AuthorDetails.propTypes = {
-  imgUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  details: PropTypes.string,
+  imgUrl: PropTypes.string,
+  details: PropTypes.string
 };
 
 AuthorDetails.defaultProps = {
   details: '',
+  imgUrl: 'https://i.imgur.com/mECBxga.png'
 };
 
 export default AuthorDetails;
