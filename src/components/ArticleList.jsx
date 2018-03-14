@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import ArticleListItem from './ArticleListItem';
 
 const ArticleList = props => (
-  <div>
+  <div
+    style={{
+      marginBottom: '30px'
+    }}
+  >
     <h2>{props.heading}</h2>
     {props.articles.length === 0
       ? 'You have not liked any articles'
