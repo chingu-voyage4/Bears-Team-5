@@ -11,7 +11,7 @@ router.get('/user', function (req, res) {
 });
 
 router.post(
-  '/user', [
+  '/register', [
     body('username', 'username must be between 4 to 15 characters long, and can only contain alphanumerics, underscores and dashes.')
       .exists().isLength({ min: 4, max: 15 }).matches(/^[A-Za-z0-9_-]+$/i),
 
@@ -50,13 +50,20 @@ router.post(
     const errors = validationResult(req).formatWith(errorFormatter);
 
     if (!errors.isEmpty()) {
-      res.status(422).json({ msg: 'failed', errors: errors.array({ onlyFirstError: true }) });
+      res.status(422).json({ msg: 'missing or invalid info', errors: errors.array({ onlyFirstError: true }) });
     } else {
       const saltRounds = 10;
       bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-        db.query('INSERT INTO `user` (username, password, email) VALUES (?, ?, ?)', [req.body.username, hash, req.body.email], function (error) {
+        db.query('INSERT INTO `user` (username, password, email) VALUES (?, ?, ?)', [req.body.username, hash, req.body.email], function (error, results) {
           if (error) throw error;
-          res.status(201).json({ msg: 'successful' });
+          const userId = results.insertId;
+          const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+            expiresIn: "3h"
+        });
+          res.status(201).json({
+            msg: 'successful',
+            token: `Bearer ${token}`
+      });
         });
       });
     }
