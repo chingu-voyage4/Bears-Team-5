@@ -70,9 +70,33 @@ router.post(
   }
 );
 
-router.put('/user/:id', function (req, res) {
-  // TODO
-  res.send({ type: 'PUT' });
+router.post('/login', function (req, res) {
+  if (req.body.username && req.body.password) {
+    db.query('SELECT `password`, `user_id` FROM `user` WHERE `username` = ?', [req.body.username], function (err, results) {
+      if (err) throw err;
+      if (results.length === 1) {
+        const hashedPassword = results[0].password.toString();
+        bcrypt.compare(req.body.password, hashedPassword, function (err, compareResult) {
+          if (err) { return badInfo() }
+          if (compareResult) {
+            const userId = results[0].user_id;
+            const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+              expiresIn: "3h"
+            });
+            res.status(200).json({
+              msg: 'successful',
+              token: `Bearer ${token}`
+            });
+          } else { return badInfo() }
+        });
+      } else { return badInfo() }
+    });
+  } else { return badInfo() }
+
+  function badInfo() {
+    return res.status(422).json({ msg: 'invalid username or password' });
+  }
+});
 });
 
 module.exports = router;
