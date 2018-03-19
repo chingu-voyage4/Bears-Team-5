@@ -8,14 +8,16 @@ const ArticleList = props => (
       marginBottom: '30px'
     }}
   >
-    <h2>{props.heading}</h2>
+    <h2>{props.type}</h2>
     {props.articles.length === 0
-      ? 'You have not liked any articles'
+      ? `You have not ${props.type === 'Liked Articles' ? 'liked' : 'published'} any articles`
       : props.articles.map((article) => {
+          console.log(article.author.username);
           return (
             <ArticleListItem
               articleTitle={article.title}
-              articleAuthor={article.author}
+              articleAuthor={article.author.username}
+              details={article.author.details}
               articleImg="https://static.pexels.com/photos/65834/pexels-photo-65834.jpeg"
               key={Math.floor(Math.random() * 99999)}
             />
@@ -26,7 +28,7 @@ const ArticleList = props => (
 
 ArticleList.propTypes = {
   articles: PropTypes.array,
-  heading: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired
 };
 
 ArticleList.defaultProps = {
