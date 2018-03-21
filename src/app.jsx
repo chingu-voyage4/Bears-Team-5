@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SignUpForm from './components/SignUpForm';
+import UserAuthentication from './components/UserAuthentication';
 
 // const likedArticles = [
 //   {
@@ -19,4 +19,4 @@ import SignUpForm from './components/SignUpForm';
 //   }
 // ];
 
-ReactDOM.render(<SignUpForm />, document.getElementById('app'));
+ReactDOM.render(<UserAuthentication />, document.getElementById('app'));
