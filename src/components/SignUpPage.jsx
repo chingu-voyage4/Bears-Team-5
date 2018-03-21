@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Modal from 'react-modal';
 
 export default class SignUpPage extends Component {
   state = {
