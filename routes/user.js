@@ -102,7 +102,7 @@ router.post('/login', function (req, res) {
   }
 });
 
-router.patch('/users/:id', [auth,
+router.patch('/users/', [auth,
   body('newusername', 'username must be between 4 to 15 characters long, and can only contain alphanumerics, underscores and dashes.')
     .optional().isLength({ min: 4, max: 15 }).matches(/^[A-Za-z0-9_-]+$/i),
 
@@ -136,121 +136,125 @@ router.patch('/users/:id', [auth,
 
   body('avatar').optional().isURL()
 ], function (req, res) {
-  if (Number(req.params.id) === Number(req.authData.id)) {
+  db.query('SELECT `username` FROM `user` WHERE `user_id`=?', [req.authData.id], function (err, results) {
+    if (err) throw err;
+    if (results.length !== 0) {
+      const errorFormatter = ({ msg, param }) => {
+        return { msg, param };
+      };
+      const errors = validationResult(req).formatWith(errorFormatter);
 
-    const errorFormatter = ({ msg, param }) => {
-      return { msg, param };
-    };
-    const errors = validationResult(req).formatWith(errorFormatter);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ msg: 'missing or invalid info', errors: errors.array({ onlyFirstError: true }) });
-    }
-    var updatedFields = [];
-    var updatedPassword = false;
-    // all fields must be checked on the frontend for changes after being served by GET request
-    function updatePassword() {
-      return new Promise(function (resolve, reject) {
-        if (req.body.password && req.body.newpassword && req.body.confirm_new_password) {
-          db.query('SELECT `password` FROM `user` WHERE `user_id` = ?', [req.authData.id], function (err, results) {
-            if (err) throw err;
-            if (results.length === 1) {
-              const hashedPassword = results[0].password.toString();
-              bcrypt.compare(req.body.password, hashedPassword, function (err, compareResult) {
-                if (err) { reject('missing or invalid info') }
-                if (compareResult) {
-                  const saltRounds = 10;
-                  bcrypt.hash(req.body.newpassword, saltRounds, function (err, hash) {
-                    db.query('UPDATE `user` SET `password`=? WHERE `user_id`=?', [hash, req.authData.id], function (error) {
-                      if (error) throw error;
-                      updatedPassword = true;
-                      resolve();
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ msg: 'missing or invalid info', errors: errors.array({ onlyFirstError: true }) });
+      }
+      var updatedFields = [];
+      var updatedPassword = false;
+      // all fields must be checked on the frontend for changes after being served by GET request
+      function updatePassword() {
+        return new Promise(function (resolve, reject) {
+          if (req.body.password && req.body.newpassword && req.body.confirm_new_password) {
+            db.query('SELECT `password` FROM `user` WHERE `user_id` = ?', [req.authData.id], function (err, results) {
+              if (err) throw err;
+              if (results.length === 1) {
+                const hashedPassword = results[0].password.toString();
+                bcrypt.compare(req.body.password, hashedPassword, function (err, compareResult) {
+                  if (err) { reject('missing or invalid info') }
+                  if (compareResult) {
+                    const saltRounds = 10;
+                    bcrypt.hash(req.body.newpassword, saltRounds, function (err, hash) {
+                      db.query('UPDATE `user` SET `password`=? WHERE `user_id`=?', [hash, req.authData.id], function (error) {
+                        if (error) throw error;
+                        updatedPassword = true;
+                        resolve();
+                      });
                     });
-                  });
-                } else { reject('missing or invalid info') }
-              });
-            } else { reject('missing or invalid info') }
-          });
-        } else { resolve() }
-      })
-    }
-    function updateEmail() {
-      return new Promise(function (resolve) {
-        if (req.body.newemail) {
-          db.query('UPDATE `user` SET `email`=? WHERE `user_id`=?', [req.body.newemail, req.authData.id], function (error) {
-            if (error) throw error;
-            updatedFields.push('`email`');
+                  } else { reject('missing or invalid info') }
+                });
+              } else { reject('missing or invalid info') }
+            });
+          } else { resolve() }
+        })
+      }
+      function updateEmail() {
+        return new Promise(function (resolve) {
+          if (req.body.newemail) {
+            db.query('UPDATE `user` SET `email`=? WHERE `user_id`=?', [req.body.newemail, req.authData.id], function (error) {
+              if (error) throw error;
+              updatedFields.push('`email`');
+              resolve();
+            });
+          } else {
             resolve();
-          });
-        } else {
-          resolve();
-        }
-      })
-    }
-    function updateUsername() {
-      return new Promise(function (resolve) {
-        if (req.body.newusername) {
-          db.query('UPDATE `user` SET `username`=? WHERE `user_id`=?', [req.body.newusername, req.authData.id], function (error) {
-            if (error) throw error;
-            updatedFields.push('`username`');
+          }
+        })
+      }
+      function updateUsername() {
+        return new Promise(function (resolve) {
+          if (req.body.newusername) {
+            db.query('UPDATE `user` SET `username`=? WHERE `user_id`=?', [req.body.newusername, req.authData.id], function (error) {
+              if (error) throw error;
+              updatedFields.push('`username`');
+              resolve();
+            });
+          } else {
             resolve();
-          });
-        } else {
-          resolve();
-        }
-      })
-    }
-    function updateBio() {
-      return new Promise(function (resolve) {
-        if (req.body.bio) {
-          db.query('UPDATE `user` SET `bio`=? WHERE `user_id`=?', [req.body.bio, req.authData.id], function (error) {
-            if (error) throw error;
-            updatedFields.push('`bio`');
+          }
+        })
+      }
+      function updateBio() {
+        return new Promise(function (resolve) {
+          if (req.body.bio) {
+            db.query('UPDATE `user` SET `bio`=? WHERE `user_id`=?', [req.body.bio, req.authData.id], function (error) {
+              if (error) throw error;
+              updatedFields.push('`bio`');
+              resolve();
+            });
+          } else {
             resolve();
-          });
-        } else {
-          resolve();
-        }
-      })
-    }
-    function updateAvatar() {
-      return new Promise(function (resolve) {
-        if (req.body.avatar) {
-          db.query('UPDATE `user` SET `avatar`=? WHERE `user_id`=?', [req.body.avatar, req.authData.id], function (error) {
-            if (error) throw error;
-            updatedFields.push('`avatar`');
+          }
+        })
+      }
+      function updateAvatar() {
+        return new Promise(function (resolve) {
+          if (req.body.avatar) {
+            db.query('UPDATE `user` SET `avatar`=? WHERE `user_id`=?', [req.body.avatar, req.authData.id], function (error) {
+              if (error) throw error;
+              updatedFields.push('`avatar`');
+              resolve();
+            });
+          } else {
             resolve();
-          });
-        } else {
-          resolve();
-        }
-      })
-    }
+          }
+        })
+      }
 
-    updatePassword().then(updateEmail).then(updateUsername).then(updateAvatar).then(updateBio).then(() => {
-      if (updatedFields.length > 0) {
-        updatedFields = updatedFields.join(",");
-        // SQLi security threat
-        const query = 'SELECT ' + updatedFields + ' FROM `user` WHERE `user_id`=' + req.authData.id;
-        db.query(query, function (error, results) {
-          if (error) throw error;
-          results[0].changed_password = updatedPassword;
-          return res.status(200).send({ msg: 'successful', user: results[0] });
-        });
-      }
-      if (updatedPassword && updatedFields.length === 0) {
-        return res.status(200).send({ msg: 'successful', user: { changed_password: updatedPassword } });
-      }
-      if (!updatedPassword && updatedFields.length === 0) {
-        throw new Error('missing or invalid info');
-      }
-    }).catch(function () {
-      return res.status(422).send({ msg: 'missing or invalid info' });
-    });
+      updatePassword().then(updateEmail).then(updateUsername).then(updateAvatar).then(updateBio).then(() => {
+        if (updatedFields.length > 0) {
+          updatedFields = updatedFields.join(",");
+          // SQLi security threat
+          const query = 'SELECT ' + updatedFields + ' FROM `user` WHERE `user_id`=' + req.authData.id;
+          db.query(query, function (error, results) {
+            if (error) throw error;
+            results[0].changed_password = updatedPassword;
+            return res.status(200).send({ msg: 'successful', user: results[0] });
+          });
+        }
+        if (updatedPassword && updatedFields.length === 0) {
+          return res.status(200).send({ msg: 'successful', user: { changed_password: updatedPassword } });
+        }
+        if (!updatedPassword && updatedFields.length === 0) {
+          throw new Error('missing or invalid info');
+        }
+      }).catch(function () {
+        return res.status(422).send({ msg: 'missing or invalid info' });
+      });
 
-  } else {
-    return res.status(401).send({ msg: 'auth failed' });
-  }
+    } else {
+      return res.status(401).send({ msg: 'auth failed' });
+    }
+  })
+
+
 });
 
 

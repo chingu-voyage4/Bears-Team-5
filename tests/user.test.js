@@ -266,7 +266,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 401 when missing JWT in request headers, and body contains Auth failed msg', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .send({
         username: 'john',
         password: 'Aa@123456'
@@ -282,7 +282,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 401 when JWT is invalid, and body contains Auth failed msg', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTIxMTk4MzUzLCJleHAiOjE1MjEyMDkxNTN9.ue9Ef8qBH4kQmnbngoWvjUm9fQhuvHV9l_BoHP2uVoc'
       })
@@ -300,27 +300,8 @@ describe('user update info request handler', function () {
       });
   });
 
-  it('responds with 401 when trying to change other users info, and body contains Auth failed msg', function (done) {
-    const RANDOM_USER_ID = 466513214;
-    request(app).patch(`/api/users/${RANDOM_USER_ID}`)
-      .set({
-        Authorization: `Bearer ${token}`
-      })
-      .send({
-        username: 'john',
-        password: 'qQ@123456789',
-      }).expect(401)
-      .expect('Content-Type', /json/)
-      .end(function (err, res) {
-        if (err) done(err);
-        expect(res.body).to.have.property('msg');
-        expect(res.body.msg).to.equal('auth failed');
-        done();
-      });
-  });
-
   it('responds with 422 when trying to change password with missing required fields, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -337,7 +318,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when request body contains no info fields at all, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -353,7 +334,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change password with wrong current password, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -372,7 +353,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change password with invalid new password, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -392,7 +373,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change password with invalid new password confirmation, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -414,7 +395,7 @@ describe('user update info request handler', function () {
   it('responds with 200 when trying to change password with correct info, and body contains changed fields. DB updated', function (done) {
     db.query('SELECT `password` FROM `user` WHERE `user_id`=?', [userId], function (err, results) {
       if (err) throw err;
-      request(app).patch(`/api/users/${userId}`)
+      request(app).patch(`/api/users/`)
         .set({
           Authorization: `Bearer ${token}`
         })
@@ -440,7 +421,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change email with invalid email, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -458,7 +439,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change email with an already used email, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -478,7 +459,7 @@ describe('user update info request handler', function () {
   it('responds with 200 when trying to change email with correct info, and body contains changed fields. DB updated', function (done) {
     db.query('SELECT `email` FROM `user` WHERE `user_id`=?', [userId], function (err, results) {
       if (err) throw err;
-      request(app).patch(`/api/users/${userId}`)
+      request(app).patch(`/api/users/`)
         .set({
           Authorization: `Bearer ${token}`
         })
@@ -502,7 +483,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change username with an already used username, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -520,7 +501,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change username with invalid username, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -540,7 +521,7 @@ describe('user update info request handler', function () {
   it('responds with 200 when trying to change username with correct info, and body contains changed fields. DB updated', function (done) {
     db.query('SELECT `username` FROM `user` WHERE `user_id`=?', [userId], function (err, results) {
       if (err) throw err;
-      request(app).patch(`/api/users/${userId}`)
+      request(app).patch(`/api/users/`)
         .set({
           Authorization: `Bearer ${token}`
         })
@@ -566,7 +547,7 @@ describe('user update info request handler', function () {
   it('responds with 200 when trying to change bio, and body contains changed fields. DB updated', function (done) {
     db.query('SELECT `bio` FROM `user` WHERE `user_id`=?', [userId], function (err, results) {
       if (err) throw err;
-      request(app).patch(`/api/users/${userId}`)
+      request(app).patch(`/api/users/`)
         .set({
           Authorization: `Bearer ${token}`
         })
@@ -590,7 +571,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change avatar with invalid link, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
@@ -610,7 +591,7 @@ describe('user update info request handler', function () {
   it('responds with 200 when trying to change avatar with valid link, and body contains changed fields. DB updated', function (done) {
     db.query('SELECT `avatar` FROM `user` WHERE `user_id`=?', [userId], function (err, results) {
       if (err) throw err;
-      request(app).patch(`/api/users/${userId}`)
+      request(app).patch(`/api/users/`)
         .set({
           Authorization: `Bearer ${token}`
         })
@@ -636,7 +617,7 @@ describe('user update info request handler', function () {
   it('responds with 200 when trying to change multiple fields with correct info, and body contains changed fields. DB updated', function (done) {
     db.query('SELECT `avatar`,`email` FROM `user` WHERE `user_id`=?', [userId], function (err, results) {
       if (err) throw err;
-      request(app).patch(`/api/users/${userId}`)
+      request(app).patch(`/api/users/`)
         .set({
           Authorization: `Bearer ${token}`
         })
@@ -664,7 +645,7 @@ describe('user update info request handler', function () {
   });
 
   it('responds with 422 when trying to change multiple fields with one having invalid info, and body contains error msg(s)', function (done) {
-    request(app).patch(`/api/users/${userId}`)
+    request(app).patch(`/api/users/`)
       .set({
         Authorization: `Bearer ${token}`
       })
