@@ -12,6 +12,10 @@ export default class SignUpPage extends Component {
     errors: []
   };
 
+  closeModal = () => {
+    this.setState(() => ({ modalIsOpen: false }));
+  };
+
   onUsernameChange = e => {
     const value = e.target.value;
     this.setState(() => ({
@@ -59,7 +63,7 @@ export default class SignUpPage extends Component {
       modalIsOpen: false
     })
       .then(response => {
-        console.log(response);
+        this.setState(() => ({ modalIsOpen: true }));
       })
       .catch(error => {
         const errors = error.response.data.errors.map(error => error.msg);
@@ -116,6 +120,14 @@ export default class SignUpPage extends Component {
           <br />
           <button type="submit">Submit</button>
         </form>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          contentLabel="Registration successful"
+          onRequestClose={() => this.setState(() => ({ modalIsOpen: false }))}
+        >
+          <a onClick={this.closeModal}>&times;</a>
+          <p>You have successfully registered!</p>
+        </Modal>
       </div>
     );
   }
