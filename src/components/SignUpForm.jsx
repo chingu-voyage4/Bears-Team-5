@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import Modal from 'react-modal';
 
 export default class SignUpPage extends Component {
   state = {
     username: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    modalIsOpen: false,
+    errors: []
   };
 
   onUsernameChange = e => {
@@ -36,46 +40,83 @@ export default class SignUpPage extends Component {
     }));
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    const data = {
+      username: this.state.username,
+      password: this.state.password,
+      confirmpassword: this.state.confirmPassword,
+      email: this.state.email
+    };
+    const url = 'http://localhost:4000/api/user';
+    axios({
+      url,
+      method: 'post',
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      modalIsOpen: false
+    })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        const errors = error.response.data.errors.map(error => error.msg);
+        this.setState(() => ({ errors }));
+      });
+  };
+
   render() {
     return (
-      <form>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={this.state.username}
-            onChange={this.onUsernameChange}
-          />
-        </label>
-        <br />
-        <label htmlFor="email">
-          Email:
-          <input type="email" name="email" value={this.state.email} onChange={this.onEmailChange} />
-        </label>
-        <br />
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.onPasswordChange}
-          />
-        </label>
-        <br />
-        <label htmlFor="confirmPassword">
-          Confirm Password:
-          <input
-            type="password"
-            name="confirmPassword"
-            value={this.state.confirmPassword}
-            onChange={this.onConfirmPasswordChange}
-          />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
+      <div>
+        <form onSubmit={this.onSubmit}>
+          {this.state.errors.map((error, index) => (
+            <p key={index}>{error.charAt(0).toUpperCase() + error.slice(1)}</p>
+          ))}
+          <label htmlFor="username">
+            Username:
+            <input
+              type="text"
+              name="username"
+              value={this.state.username}
+              onChange={this.onUsernameChange}
+            />
+          </label>
+          <br />
+          <label htmlFor="email">
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.onEmailChange}
+            />
+          </label>
+          <br />
+          <label htmlFor="password">
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.onPasswordChange}
+            />
+          </label>
+          <br />
+          <label htmlFor="confirmPassword">
+            Confirm Password:
+            <input
+              type="password"
+              name="confirmPassword"
+              value={this.state.confirmPassword}
+              onChange={this.onConfirmPasswordChange}
+            />
+          </label>
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     );
   }
 }
