@@ -4,7 +4,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
+  connectionLimit: 100,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -12,11 +13,4 @@ const connection = mysql.createConnection({
   multipleStatements: true
 });
 
-connection.connect(function (err) {
-  if (err) {
-    console.error(`error connecting: ${err.stack}`);
-    return;
-  }
-});
-
-module.exports = connection;
+module.exports = pool;
