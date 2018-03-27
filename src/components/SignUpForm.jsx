@@ -59,8 +59,7 @@ export default class SignUpPage extends Component {
       data: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json'
-      },
-      modalIsOpen: false
+      }
     })
       .then(response => {
         this.setState(() => ({ modalIsOpen: true }));
