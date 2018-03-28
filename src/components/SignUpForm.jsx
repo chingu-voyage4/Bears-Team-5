@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 
-export default class SignUpPage extends Component {
+export default class SignUpForm extends Component {
   state = {
     username: '',
     email: '',

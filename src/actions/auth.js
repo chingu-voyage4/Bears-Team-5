@@ -5,9 +5,14 @@ export const logIn = username => ({
   username
 });
 
+export const setErrors = errors => ({
+  type: 'SET_ERRORS',
+  errors
+});
+
 export const startLogIn = (userCredentials) => {
   return (dispatch) => {
-    const url = 'localhost:4000/api/login';
+    const url = 'http://localhost:4000/api/login';
     const config = {
       url,
       method: 'post',
@@ -16,8 +21,15 @@ export const startLogIn = (userCredentials) => {
         'Content-Type': 'application/json'
       }
     };
-    return axios(config).then((response) => {
-      dispatch(logIn(userCredentials.username));
-    });
+    return axios(config)
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem('token', response.data.token);
+        dispatch(logIn(userCredentials.username));
+      })
+      .catch((error) => {
+        const errorMsg = error.response.data.msg;
+        dispatch(setErrors([errorMsg]));
+      });
   };
 };
