@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import UserAuthentication from './components/UserAuthentication';
+import PageHeader from './components/PageHeader';
 
 const store = configureStore();
 const template = (
   <Provider store={store}>
-    <UserAuthentication />
+    <PageHeader />
   </Provider>
 );
 

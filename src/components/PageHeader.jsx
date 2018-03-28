@@ -1,4 +1,8 @@
 import React from 'react';
+import UserAuthentication from './UserAuthentication';
+
+const token = localStorage.getItem('token') || '';
+console.log(token);
 
 const PageHeader = () => (
   <div>
@@ -7,10 +11,7 @@ const PageHeader = () => (
       alt="logo goes here"
       style={{ height: '50px', width: '50px', float: 'left' }}
     />
-    <div style={{ float: 'right' }}>
-      <button>Sign in</button>
-      <button>Create account</button>
-    </div>
+    {token === '' ? <UserAuthentication /> : 'Link to profile goes here'}
   </div>
 );
 
