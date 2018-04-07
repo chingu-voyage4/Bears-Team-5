@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import PageHeader from './components/PageHeader';
+import AppRouter from './routes/AppRouter';
 
 const store = configureStore();
 const template = (
   <Provider store={store}>
-    <PageHeader />
+    <AppRouter />
   </Provider>
 );
 
