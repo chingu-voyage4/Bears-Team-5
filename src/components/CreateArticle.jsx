@@ -5,6 +5,7 @@ class CreateArticle extends Component {
   state = {
     articleBody: '',
     articleTitle: '',
+    articleCategory: 'technology'
   };
 
   onTitleChange = e => {
@@ -18,6 +19,13 @@ class CreateArticle extends Component {
     const value = e.target.value;
     this.setState({
       articleBody: value,
+    });
+  };
+
+  onCategoryChange = e => {
+    const value = e.target.value;
+    this.setState({
+      articleCategory: value,
     });
   };
 
@@ -46,6 +54,20 @@ class CreateArticle extends Component {
             }}
             value={this.state.articleTitle}
           />
+          <br />
+          <select onChange={this.onCategoryChange}>
+            <option value="technology" >technology</option>
+            <option value="culture" >culture</option>
+            <option value="entrepreneurship" >entrepreneurship</option>
+            <option value="creativity" >creativity</option>
+            <option value="self" >self</option>
+            <option value="politics" >politics</option>
+            <option value="media" >media</option>
+            <option value="productivity" >productivity</option>
+            <option value="design" >design</option>
+            <option value="popular" >popular</option>
+            <option value="other" >other</option>
+          </select>
           <br />
           <textarea
             name="body"
