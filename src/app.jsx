@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UserAuthentication from './components/UserAuthentication';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
+import PageHeader from './components/PageHeader';
 
-// const likedArticles = [
-//   {
-//     author: {
-//       username: 'Yoda',
-//       details: 'Awesome, I am'
-//     },
-//     title: 'Do or do not, there is not try'
-//   },
-//   {
-//     author: {
-//       username: 'Darth Vader',
-//       details: 'You have failed me yet again'
-//     },
-//     title: 'I am your father!'
-//   }
-// ];
+const store = configureStore();
+const template = (
+  <Provider store={store}>
+    <PageHeader />
+  </Provider>
+);
 
-ReactDOM.render(<UserAuthentication />, document.getElementById('app'));
+ReactDOM.render(template, document.getElementById('app'));

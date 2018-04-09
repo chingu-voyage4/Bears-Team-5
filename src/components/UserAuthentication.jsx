@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
 import SignUpForm from './SignUpForm';
+import LogInForm from './LogInForm';
+import { startLogIn } from '../actions/auth';
 
 class UserAuthentication extends Component {
   state = {
@@ -15,6 +18,10 @@ class UserAuthentication extends Component {
 
   closeModal = () => {
     this.setState(() => ({ modalIsOpen: false }));
+  };
+
+  onSubmit = userCredentials => {
+    this.props.startLogIn(userCredentials);
   };
 
   render() {
@@ -32,11 +39,23 @@ class UserAuthentication extends Component {
           onRequestClose={() => this.setState(() => ({ modalIsOpen: false }))}
         >
           <a onClick={this.closeModal}>&times;</a>
-          {this.state.modalContent === 'Sign Up' ? <SignUpForm /> : <p>Log In</p>}
+          {this.state.modalContent === 'Sign Up' ? (
+            <SignUpForm />
+          ) : (
+            <LogInForm onSubmit={this.onSubmit} errors={this.props.errors} />
+          )}
         </Modal>
       </div>
     );
   }
 }
 
-export default UserAuthentication;
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+const mapDispatchToProps = dispatch => ({
+  startLogIn: userCredentials => dispatch(startLogIn(userCredentials))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserAuthentication);
