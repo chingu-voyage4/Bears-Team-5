@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import slugify from 'slugify';
 import uuid from 'uuid';
 import AuthorDetails from './AuthorDetails';
+import { createArticle } from '../actions/articles';
 
 class CreateArticle extends Component {
   state = {
@@ -38,8 +40,12 @@ class CreateArticle extends Component {
       body: this.state.articleBody,
       title: this.state.articleTitle,
       category: this.state.articleCategory,
-      date: ""
+      date: moment.now(),
+      slug: slugify(this.state.articleTitle),
+      likes: 0,
+      user_id: uuid()
     }
+    this.props.createArticle(article);
   }
 
   render() {
