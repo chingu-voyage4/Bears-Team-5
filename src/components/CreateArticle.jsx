@@ -5,6 +5,7 @@ class CreateArticle extends Component {
   state = {
     articleBody: '',
     articleTitle: '',
+    articleCategory: 'technology'
   };
 
   onTitleChange = e => {
@@ -18,6 +19,13 @@ class CreateArticle extends Component {
     const value = e.target.value;
     this.setState({
       articleBody: value,
+    });
+  };
+
+  onCategoryChange = e => {
+    const value = e.target.value;
+    this.setState({
+      articleCategory: value,
     });
   };
 
@@ -47,7 +55,7 @@ class CreateArticle extends Component {
             value={this.state.articleTitle}
           />
           <br />
-          <select>
+          <select onChange={this.onCategoryChange}>
             <option value="technology" >technology</option>
             <option value="culture" >culture</option>
             <option value="entrepreneurship" >entrepreneurship</option>
