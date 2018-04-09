@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import slugify from 'slugify';
+import uuid from 'uuid';
 import AuthorDetails from './AuthorDetails';
+import { createArticle } from '../actions/articles';
 
 class CreateArticle extends Component {
   state = {
@@ -29,6 +34,20 @@ class CreateArticle extends Component {
     });
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    const article = {
+      body: this.state.articleBody,
+      title: this.state.articleTitle,
+      category: this.state.articleCategory,
+      date: moment.now(),
+      slug: slugify(this.state.articleTitle),
+      likes: 0,
+      user_id: uuid()
+    }
+    this.props.createArticle(article);
+  }
+
   render() {
     return (
       <div>
@@ -36,7 +55,7 @@ class CreateArticle extends Component {
           name="Anonymous"
           imgUrl="https://images.pexels.com/photos/38275/anonymous-studio-figure-photography-facial-mask-38275.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
         />
-        <form>
+        <form onSubmit={this.onSubmit}>
           <input
             type="text"
             name="title"
@@ -84,10 +103,15 @@ class CreateArticle extends Component {
             }}
             value={this.state.articleBody}
           />
+          <button type="submit">Publish Article</button>
         </form>
       </div>
     );
   }
 }
 
-export default CreateArticle;
+const mapDispatchToProps = dispatch => ({
+  createArticle: article => dispatch(createArticle(article))
+});
+
+export default connect(undefined, mapDispatchToProps)(CreateArticle);
