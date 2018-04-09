@@ -47,6 +47,20 @@ class CreateArticle extends Component {
             value={this.state.articleTitle}
           />
           <br />
+          <select>
+            <option value="technology" >technology</option>
+            <option value="culture" >culture</option>
+            <option value="entrepreneurship" >entrepreneurship</option>
+            <option value="creativity" >creativity</option>
+            <option value="self" >self</option>
+            <option value="politics" >politics</option>
+            <option value="media" >media</option>
+            <option value="productivity" >productivity</option>
+            <option value="design" >design</option>
+            <option value="popular" >popular</option>
+            <option value="other" >other</option>
+          </select>
+          <br />
           <textarea
             name="body"
             onChange={this.onBodyChange}
