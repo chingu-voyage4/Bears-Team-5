@@ -7,7 +7,6 @@ function verify(req, res, next) {
     req.authData = decoded;
     next();
   } catch (err) {
-    // console.log(err);
     return res.status(401).json({
       msg: 'auth failed'
     })
