@@ -11,9 +11,11 @@ function seed() {
     bcrypt.hash('Aa@123456', 10, function (err, hash) {
       if (err) throw err;
       db.query(
-        `DELETE FROM \`user\`;
+        `SET FOREIGN_KEY_CHECKS = 0;
+        DELETE FROM \`user\`;
         INSERT INTO \`user\` (username, password, email) VALUES (?, ?, ?);
-        INSERT INTO \`user\` (username, password, email) VALUES (?, ?, ?);`,
+        INSERT INTO \`user\` (username, password, email) VALUES (?, ?, ?);
+        SET FOREIGN_KEY_CHECKS = 1;`,
         ['john', hash, 'john@test.com', 'doe', hash, 'doe@test.com'], function (err) {
           if (err) throw err;
           resolve();
