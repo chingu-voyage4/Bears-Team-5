@@ -203,7 +203,7 @@ router.patch('/users/', [auth,
     return req.body.newpassword === req.body.confirm_new_password;
   }),
 
-  body('avatar').optional().isURL()
+  body('avatar', 'avatar must be a valid direct URL of an image').optional().isURL()
 ], function (req, res) {
   db.getConnection(function (err, connection) {
     if (err) {
