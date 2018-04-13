@@ -108,4 +108,158 @@ router.post('/articles', [auth,
     }
   });
 
+router.patch('/articles', [auth,
+  body('article_id', 'article id is missing or invalid').exists().isNumeric().custom((value) => {
+    return new Promise(function (resolve, reject) {
+      db.getConnection(function (err, connection) {
+        if (err) {
+          reject(new Error('internal server error'));
+          return;
+        }
+        connection.query('SELECT `user_id` FROM `article` WHERE `article_id`=?', [value], function (err, results) {
+          if (err) {
+            reject(new Error('internal server error'));
+            connection.release();
+            return;
+          }
+          if (results.length === 0) reject(new Error('article id is missing or invalid'));
+          connection.release();
+          resolve(results);
+        });
+      });
+    });
+  }),
+  body('newtitle', 'title must not be empty and can not be more than 50 characters long').optional().exists().isLength({ min: 1, max: 50 }),
+  body('newbody', 'body can not be empty').optional().exists().isLength({ min: 1 }),
+  body('newcategory', 'category must be a valid category').optional().custom((value) => {
+    return ['technology', 'culture', 'entrepreneurship', 'creativity', 'self', 'politics', 'media', 'productivity', 'design', 'popular', 'other']
+      .includes(value.toLowerCase());
+  }),
+  body('newimage', 'image must be a valid direct URL of an image').optional().isURL()
+],
+  function (req, res) {
+    const errorFormatter = ({ msg, param }) => {
+      return { msg, param };
+    };
+
+    const errors = validationResult(req).formatWith(errorFormatter);
+
+    if (!errors.isEmpty()) {
+      if (errors.array().find((err => err.msg === 'internal server error'))) {
+        return res.status(500).json({ msg: 'internal server error' });
+      } else {
+        return res.status(422).json({ msg: 'missing or invalid info', errors: errors.array({ onlyFirstError: true }) });
+      }
+    } else {
+      db.getConnection(function (err, connection) {
+        if (err) {
+          res.status(500).json({ msg: 'internal server error' });
+          return;
+        }
+        connection.query('SELECT `user_id` FROM `article` WHERE `article_id`=?', [req.body.article_id], function (err, results) {
+          if (err) {
+            res.status(500).json({ msg: 'internal server error' });
+            connection.release();
+            return;
+          }
+          connection.release();
+          if (results[0].user_id === req.authData.id) {
+            var updatedFields = [];
+
+            function updateTitle() {
+              return new Promise(function (resolve) {
+                if (req.body.newtitle) {
+                  connection.query('UPDATE `article` SET `title`=? WHERE `article_id`=?', [req.body.newtitle, req.body.article_id], function (error) {
+                    if (error) {
+                      res.status(500).json({ msg: 'internal server error' });
+                      connection.release();
+                      return;
+                    }
+                    updatedFields.push('`title`');
+                    resolve();
+                  });
+                } else {
+                  resolve();
+                }
+              })
+            }
+
+            function updateBody() {
+              return new Promise(function (resolve) {
+                if (req.body.newbody) {
+                  connection.query('UPDATE `article` SET `body`=? WHERE `article_id`=?', [req.body.newbody, req.body.article_id], function (error) {
+                    if (error) {
+                      res.status(500).json({ msg: 'internal server error' });
+                      connection.release();
+                      return;
+                    }
+                    updatedFields.push('`body`');
+                    resolve();
+                  });
+                } else {
+                  resolve();
+                }
+              })
+            }
+
+            function updateCategory() {
+              return new Promise(function (resolve) {
+                if (req.body.newcategory) {
+                  connection.query('UPDATE `article` SET `category`=? WHERE `article_id`=?', [req.body.newcategory, req.body.article_id], function (error) {
+                    if (error) {
+                      res.status(500).json({ msg: 'internal server error' });
+                      connection.release();
+                      return;
+                    }
+                    updatedFields.push('`category`');
+                    resolve();
+                  });
+                } else {
+                  resolve();
+                }
+              })
+            }
+
+            function updateImage() {
+              return new Promise(function (resolve) {
+                if (req.body.newimage) {
+                  connection.query('UPDATE `article` SET `image`=? WHERE `article_id`=?', [req.body.newimage, req.body.article_id], function (error) {
+                    if (error) {
+                      res.status(500).json({ msg: 'internal server error' });
+                      connection.release();
+                      return;
+                    }
+                    updatedFields.push('`image`');
+                    resolve();
+                  });
+                } else {
+                  resolve();
+                }
+              })
+            }
+
+            updateTitle().then(updateBody).then(updateCategory).then(updateImage).then(() => {
+              if (updatedFields.length > 0) {
+                updatedFields = updatedFields.join(",");
+                const query = 'SELECT ' + updatedFields + ' FROM `article` WHERE `article_id`=' + req.body.article_id;
+                connection.query(query, function (error, results) {
+                  if (error) {
+                    res.status(500).json({ msg: 'internal server error' });
+                    connection.release();
+                    return;
+                  }
+                  return res.status(200).send({ msg: 'successful', article: results[0] });
+                });
+              } else {
+                return res.status(422).send({ msg: 'missing or invalid info' });
+              }
+            });
+          } else {
+            return res.status(401).send({ msg: 'auth failed' });
+          }
+        });
+      });
+    }
+  }
+);
 module.exports = router;
