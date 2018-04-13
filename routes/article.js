@@ -262,4 +262,47 @@ router.patch('/articles', [auth,
     }
   }
 );
+
+router.delete('/articles', [auth,
+  body('article_id', 'article id is missing or invalid').exists().isNumeric()],
+  function (req, res) {
+    const errorFormatter = ({ msg, param }) => {
+      return { msg, param };
+    };
+    const errors = validationResult(req).formatWith(errorFormatter);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ msg: 'missing or invalid info', errors: errors.array({ onlyFirstError: true }) });
+    } else {
+      db.getConnection(function (err, connection) {
+        if (err) {
+          res.status(500).json({ msg: 'internal server error' });
+          return;
+        }
+        connection.query('SELECT `user_id` FROM `article` WHERE `article_id`=?', [req.body.article_id], function (err, results) {
+          if (err) {
+            res.status(500).json({ msg: 'internal server error' });
+            connection.release();
+            return;
+          }
+
+          if (results[0].user_id === req.authData.id) {
+            connection.query('DELETE FROM `article` WHERE `article_id`=?', [req.body.article_id], function (err, results) {
+              if (err) {
+                res.status(500).json({ msg: 'internal server error' });
+                connection.release();
+                return;
+              }
+              connection.release();
+              return res.status(200).send({ msg: 'successful' });
+            });
+          } else {
+            connection.release();
+            return res.status(401).send({ msg: 'auth failed' });
+          }
+        })
+      });
+    }
+  });
+
 module.exports = router;

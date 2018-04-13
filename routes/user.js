@@ -231,7 +231,6 @@ router.patch('/users/', [auth,
         }
         var updatedFields = [];
         var updatedPassword = false;
-        // all fields must be checked on the frontend for changes after being served by GET request
         function updatePassword() {
           return new Promise(function (resolve, reject) {
             if (req.body.password && req.body.newpassword && req.body.confirm_new_password) {
@@ -333,7 +332,6 @@ router.patch('/users/', [auth,
         updatePassword().then(updateEmail).then(updateUsername).then(updateAvatar).then(updateBio).then(() => {
           if (updatedFields.length > 0) {
             updatedFields = updatedFields.join(",");
-            // SQLi security threat
             const query = 'SELECT ' + updatedFields + ' FROM `user` WHERE `user_id`=' + req.authData.id;
             connection.query(query, function (error, results) {
               if (error) {
