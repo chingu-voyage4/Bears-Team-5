@@ -90,6 +90,56 @@ describe('post article handler', function () {
       });
   });
 
+  it('body contains 2 different slugs when submitting two articles with the same title', function (done) {
+    var slug1;
+    var slug2;
+    request(app).post(`/api/articles/`)
+      .set({
+        Authorization: `Bearer ${token}`
+      })
+      .send({
+        title: "javascript tutorial",
+        body: "today we will learn more about ES6 syntax",
+        category: "technology",
+        date: "2018-01-18",
+        image: "http://images.com/files/image.png"
+      })
+      .expect(201)
+      .expect('Content-Type', /json/)
+      .end(function (err, res) {
+        if (err) done(err);
+        expect(res.body).to.have.property('msg');
+        expect(res.body.msg).to.equal('successful');
+        expect(res.body).to.have.property('slug');
+        expect(res.body.slug.length > 0, 'slug string length is above 0');
+        slug1 = res.body.slug;
+
+        request(app).post(`/api/articles/`)
+          .set({
+            Authorization: `Bearer ${token}`
+          })
+          .send({
+            title: "javascript tutorial",
+            body: "today we will learn more about ES6 syntax",
+            category: "technology",
+            date: "2018-01-18",
+            image: "http://images.com/files/image.png"
+          })
+          .expect(201)
+          .expect('Content-Type', /json/)
+          .end(function (err2, res2) {
+            if (err2) done(err2);
+            expect(res2.body).to.have.property('msg');
+            expect(res2.body.msg).to.equal('successful');
+            expect(res2.body).to.have.property('slug');
+            expect(res2.body.slug.length > 0, 'slug string length is above 0');
+            slug2 = res2.body.slug;
+            expect(slug1).to.not.equal(slug2);
+            done();
+          });
+      });
+  });
+
   it('responds with 401 when JWT is invalid, and body contains Auth failed msg', function (done) {
     request(app).post(`/api/articles/`)
       .set({
@@ -345,6 +395,7 @@ describe('get single article handler', function () {
         done();
       });
   });
+
 
 
 });
