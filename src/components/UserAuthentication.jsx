@@ -26,11 +26,11 @@ class UserAuthentication extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.triggerModal} name="Sign Up">
+      <div className="authentication">
+        <button onClick={this.triggerModal} name="Sign Up" className="authentication__button">
           Sign Up
         </button>
-        <button onClick={this.triggerModal} name="Log In">
+        <button onClick={this.triggerModal} name="Log In" className="authentication__button">
           Log In
         </button>
         <Modal
@@ -42,8 +42,8 @@ class UserAuthentication extends Component {
           {this.state.modalContent === 'Sign Up' ? (
             <SignUpForm />
           ) : (
-            <LogInForm onSubmit={this.onSubmit} errors={this.props.errors} />
-          )}
+              <LogInForm onSubmit={this.onSubmit} errors={this.props.errors} />
+            )}
         </Modal>
       </div>
     );
