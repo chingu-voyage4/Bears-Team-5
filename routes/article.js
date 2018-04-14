@@ -92,8 +92,8 @@ router.post('/articles', [auth,
 
         const query = (req.body.image) ? 'INSERT INTO `article` (user_id, title, body, category, date, slug, image) VALUES (?, ?, ?, ?, ?, ?, ?)' :
           'INSERT INTO `article` (user_id, title, body, category, date, slug) VALUES (?, ?, ?, ?, ?, ?)';
-        const values = (req.body.image) ? [req.authData.id, req.body.title, req.body.body, req.body.category, req.body.date, titleSlug, req.body.image] :
-          [req.authData.id, req.body.title, req.body.body, req.body.category, req.body.date, titleSlug];
+        const values = (req.body.image) ? [req.authData.id, req.body.title, req.body.body, req.body.category.toLowerCase(), req.body.date, titleSlug, req.body.image] :
+          [req.authData.id, req.body.title, req.body.body, req.body.category.toLowerCase(), req.body.date, titleSlug];
 
         connection.query(query, values, function (err, results) {
           if (err) {
