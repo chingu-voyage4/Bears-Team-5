@@ -29,15 +29,30 @@ export default class ArticlePage extends React.Component {
         <div>
           <button className="article__like">Like</button>
         </div>
-        <ul>
+        <h3>Suggested Articles</h3>
+        <ul className="article__suggestions">
           <li>
-            <a href="#">Suggested Article</a>
+            <a href="#">
+              <div>
+                <img src="http://via.placeholder.com/200x150" />
+                <h3>Suggested Article</h3>
+              </div>
+            </a>
           </li>
           <li>
-            <a href="#">Suggested Article</a>
-          </li>
-          <li>
-            <a href="#">Suggested Article</a>
+            <a href="#">
+              <div>
+                <img src="http://via.placeholder.com/200x150" />
+                <h3>Suggested Article</h3>
+              </div>
+            </a>
+          </li><li>
+            <a href="#">
+              <div>
+                <img src="http://via.placeholder.com/200x150" />
+                <h3>Suggested Article</h3>
+              </div>
+            </a>
           </li>
         </ul>
         <h3>Comments go here</h3>

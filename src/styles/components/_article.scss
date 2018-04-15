@@ -3,6 +3,9 @@
   line-height: 1.8;
   margin: 20px auto;
   width: 60%;
+  & > h3{
+    font-family: $sans-pro;
+  }
 }
 
 .article__title{
@@ -21,5 +24,30 @@
   &:hover{
     border-color: darken($color: $grey, $amount: 25%);
     color: darken($color: $grey, $amount: 25%);
+  }
+}
+
+.article__suggestions{
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  width: 100%;
+  & a{
+    text-decoration: none;    
+  }
+  & > li{
+    display: inline-block;
+    list-style: none;
+    -webkit-box-shadow: 5px 5px 5px 0px lighten($grey, 20%);
+    -moz-box-shadow: 5px 5px 5px 0px lighten($grey, 20%);
+    box-shadow: 5px 5px 5px 0px lighten($grey, 20%); 
+  }
+  & h3{
+    color: #000;
+    font-family: $sans-pro;
+    font-size: $font-size-medium;
+    margin: $extra-small-size 0;
+    font-weight: 400;
+    text-align: center;
   }
 }
