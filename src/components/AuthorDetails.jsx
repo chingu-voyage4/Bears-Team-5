@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const AuthorDetails = props => (
-  <div>
-    <img src={props.imgUrl} height="50" width="50" alt="user icon" />
-    <p>{props.name}</p>
-    <p>{props.details === '' ? 'Draft' : props.details}</p>
+  <div className="details">
+    <img src={props.imgUrl} height="50" width="50" alt="user icon" className="details__image" />
+    <div>
+      <p className="details__text">{props.name}</p>
+      <p className="details__text">{props.details === '' ? 'Draft' : props.details}</p>
+    </div>
   </div>
 );
 
