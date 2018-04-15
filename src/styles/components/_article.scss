@@ -1,0 +1,25 @@
+.article{
+  font-size: $font-size-large;  
+  line-height: 1.8;
+  margin: 20px auto;
+  width: 60%;
+}
+
+.article__title{
+  font-family: $sans-pro;
+  font-size: $font-size-title;
+  font-weight: 700;
+}
+
+.article__like{
+  background: #fff;
+  border: 2px solid $grey;
+  border-radius: 5px;
+  color: darken($color: $grey, $amount: 10%);
+  font-size: $font-size-small;
+  padding: $extra-small-size $small-size;
+  &:hover{
+    border-color: darken($color: $grey, $amount: 25%);
+    color: darken($color: $grey, $amount: 25%);
+  }
+}
