@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('../models/db');
 const { body, validationResult } = require('express-validator/check');
-const jwt = require('jsonwebtoken');
 const auth = require('./middleware/auth');
 const optionalAuth = require('./middleware/optionalAuth');
 const slug = require('slug');
