@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 const Comment = props => (
   <div>
-    <img src="" alt="User logo goes here" />
-    <p>{props.userName}</p>
+    <div>
+      <img src="" alt="User logo goes here" />
+      <p>{props.userName}</p>
+    </div>
     <p>{props.commentBody}</p>
-    <button>Like</button>
-    <button>Bookmark</button>
   </div>
 );
 
