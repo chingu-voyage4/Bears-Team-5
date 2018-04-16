@@ -44,16 +44,16 @@ class CreateArticle extends Component {
 
   onCategoryChange = e => {
     const value = e.target.value;
-    this.setState({
+    this.setState(() => ({
       articleCategory: value,
-    });
+    }));
   };
 
   onURLChange = e => {
     const value = e.target.value;
-    this.setState({
+    this.setState(() => ({
       imgUrl: value,
-    });
+    }));
   };
 
   onSubmit = e => {
