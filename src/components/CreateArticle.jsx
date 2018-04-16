@@ -10,42 +10,80 @@ class CreateArticle extends Component {
   state = {
     articleBody: '',
     articleTitle: '',
-    articleCategory: 'technology'
+    articleCategory: 'technology',
+    imgUrl: '',
+    errors: {
+      titleIsBlank: false,
+      bodyIsBlank: false,
+    }
   };
 
   onTitleChange = e => {
     const value = e.target.value;
-    this.setState({
-      articleTitle: value,
+    this.setState((prevState) => {
+      const errors = prevState.errors;
+      errors.titleIsBlank = false;
+      return {
+        articleTitle: value,
+        errors
+      }
     });
   };
 
   onBodyChange = e => {
     const value = e.target.value;
-    this.setState({
-      articleBody: value,
+    this.setState((prevState) => {
+      const errors = prevState.errors;
+      errors.bodyIsBlank = false;
+      return {
+        articleBody: value,
+        errors
+      }
     });
   };
 
   onCategoryChange = e => {
     const value = e.target.value;
-    this.setState({
+    this.setState(() => ({
       articleCategory: value,
-    });
+    }));
+  };
+
+  onURLChange = e => {
+    const value = e.target.value;
+    this.setState(() => ({
+      imgUrl: value,
+    }));
   };
 
   onSubmit = e => {
     e.preventDefault();
-    const article = {
-      body: this.state.articleBody,
-      title: this.state.articleTitle,
-      category: this.state.articleCategory,
-      date: moment.now(),
-      slug: slugify(this.state.articleTitle),
-      likes: 0,
-      user_id: uuid()
+    const body = this.state.articleBody;
+    const title = this.state.articleTitle;
+    const category = this.state.articleCategory;
+    const date = moment().format("YYYY-MM-DD");
+    if (!(body === "" || title === "")) {
+      const article = {
+        body,
+        title,
+        category,
+        date,
+      }
+      this.props.createArticle(article);
+      this.setState(() => ({
+        errors: {
+          bodyIsBlank: false,
+          titleIsBlank: false
+        }
+      }))
+    } else {
+      this.setState(() => ({
+        errors: {
+          bodyIsBlank: body === "",
+          titleIsBlank: title === ""
+        }
+      }))
     }
-    this.props.createArticle(article);
   }
 
   render() {
@@ -56,6 +94,7 @@ class CreateArticle extends Component {
           imgUrl="https://images.pexels.com/photos/38275/anonymous-studio-figure-photography-facial-mask-38275.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
         />
         <form onSubmit={this.onSubmit}>
+          {this.state.errors.titleIsBlank && <p>Title cannot be left blank</p>}
           <input
             type="text"
             name="title"
@@ -88,6 +127,7 @@ class CreateArticle extends Component {
             <option value="other" >other</option>
           </select>
           <br />
+          {this.state.errors.bodyIsBlank && <p>Body cannot be left blank</p>}
           <textarea
             name="body"
             onChange={this.onBodyChange}
@@ -102,6 +142,22 @@ class CreateArticle extends Component {
               width: '60%',
             }}
             value={this.state.articleBody}
+          />
+          <input
+            type="text"
+            name="imageURL"
+            onChange={this.onURLChange}
+            placeholder="Image URL (Optional)"
+            style={{
+              border: 'none',
+              display: 'block',
+              fontSize: '30px',
+              height: '50px',
+              margin: '15px auto',
+              padding: '0 10px',
+              width: '60%',
+            }}
+            value={this.state.imgUrl}
           />
           <button type="submit">Publish Article</button>
         </form>
