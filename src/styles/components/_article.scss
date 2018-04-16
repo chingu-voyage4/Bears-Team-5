@@ -2,7 +2,6 @@
   font-size: $font-size-large;  
   line-height: 1.8;
   margin: 20px auto;
-  width: 60%;
   & > h3{
     font-family: $sans-pro;
   }
@@ -28,25 +27,26 @@
 }
 
 .article__suggestions{
+  color: #000;
   display: flex;
   justify-content: space-between;
   padding: 0;
   width: 100%;
-  & a{
+  a{
     text-decoration: none;
   }
-  & div{
+  div{
     padding-left: $extra-small-size;
   }
   & > li{
     display: inline-block;
     list-style: none;
-    -webkit-box-shadow: 5px 5px 5px 0px lighten($grey, 20%);
-    -moz-box-shadow: 5px 5px 5px 0px lighten($grey, 20%);
-    box-shadow: 5px 5px 5px 0px lighten($grey, 20%); 
+    -webkit-box-shadow: $box-shadow;
+    -moz-box-shadow: $box-shadow;
+    box-shadow: $box-shadow;
     width: 30%;
   }
-  & h3{
+  h3{
     color: #000;
     font-family: $sans-pro;
     font-size: $font-size-medium;

@@ -6,7 +6,7 @@ const AuthorDetails = props => (
     <img src={props.imgUrl} height="50" width="50" alt="user icon" className="details__image" />
     <div>
       <p className="details__text">{props.name}</p>
-      {!!props.details && <p className="details__text">{props.details}</p>}
+      {props.details !== '' && <p className="details__text">{props.details}</p>}
     </div>
   </div>
 );

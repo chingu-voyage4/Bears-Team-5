@@ -13,7 +13,7 @@ export default class ArticlePage extends React.Component {
 
   render() {
     return (
-      <div className="article">
+      <div className="article container">
         <AuthorDetails
           imgUrl="https://i.imgur.com/hyqmyzn.png"
           name="Colonel Cockerel"
@@ -58,7 +58,7 @@ export default class ArticlePage extends React.Component {
             </a>
           </li>
         </ul>
-        <h3>Comments go here</h3>
+        <h3>Comments</h3>
         <Comments comments={this.state.comments} />
       </div>
     );
