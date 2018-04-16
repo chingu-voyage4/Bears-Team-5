@@ -1,10 +1,20 @@
 // Fonts
-$crimson: 'Crimson Text', serif;
-$font-size-large: 1.8rem;
+$sans-pro: 'Source Sans Pro', sans-serif;
+$serif-pro: 'Source Serif Pro', serif;
+$font-size-title: 4rem;
+$font-size-large: 2.2rem;
+$font-size-medium: 1.8rem;
 $font-size-small: 1.4rem;
 
+// Colour
+$grey: #a6a6a6;
+
 // Spacing
+$extra-small-size: 0.8rem;
 $small-size: 1.2rem;
 $medium-size: 1.6rem;
 $large-size: 3.2rem;
 $extra-large-size: 4.8rem;
+
+// Misc
+$box-shadow: 5px 5px 5px 0px lighten($grey, 20%); 

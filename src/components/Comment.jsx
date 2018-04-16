@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AuthorDetails from "../components/AuthorDetails";
 
 const Comment = props => (
-  <div>
-    <img src="" alt="User logo goes here" />
-    <p>{props.userName}</p>
+  <div className="comment">
+    <AuthorDetails name={props.userName} />
     <p>{props.commentBody}</p>
-    <button>Like</button>
-    <button>Bookmark</button>
   </div>
 );
 
