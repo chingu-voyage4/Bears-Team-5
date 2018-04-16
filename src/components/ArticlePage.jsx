@@ -33,24 +33,27 @@ export default class ArticlePage extends React.Component {
         <ul className="article__suggestions">
           <li>
             <a href="#">
+              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
               <div>
-                <img src="http://via.placeholder.com/200x150" />
                 <h3>Suggested Article</h3>
+                <AuthorDetails name="Name Goes Here" />
               </div>
             </a>
           </li>
           <li>
             <a href="#">
+              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
               <div>
-                <img src="http://via.placeholder.com/200x150" />
                 <h3>Suggested Article</h3>
+                <AuthorDetails name="Name Goes Here" />
               </div>
             </a>
           </li><li>
             <a href="#">
+              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
               <div>
-                <img src="http://via.placeholder.com/200x150" />
                 <h3>Suggested Article</h3>
+                <AuthorDetails name="Name Goes Here" />
               </div>
             </a>
           </li>
