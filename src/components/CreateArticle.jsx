@@ -11,20 +11,34 @@ class CreateArticle extends Component {
     articleBody: '',
     articleTitle: '',
     articleCategory: 'technology',
-    imgUrl: ''
+    imgUrl: '',
+    errors: {
+      titleIsBlank: false,
+      bodyIsBlank: false,
+    }
   };
 
   onTitleChange = e => {
     const value = e.target.value;
-    this.setState({
-      articleTitle: value,
+    this.setState((prevState) => {
+      const errors = prevState.errors;
+      errors.titleIsBlank = false;
+      return {
+        articleTitle: value,
+        errors
+      }
     });
   };
 
   onBodyChange = e => {
     const value = e.target.value;
-    this.setState({
-      articleBody: value,
+    this.setState((prevState) => {
+      const errors = prevState.errors;
+      errors.bodyIsBlank = false;
+      return {
+        articleBody: value,
+        errors
+      }
     });
   };
 
@@ -44,13 +58,32 @@ class CreateArticle extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const article = {
-      body: this.state.articleBody,
-      title: this.state.articleTitle,
-      category: this.state.articleCategory,
-      date: moment.now().format("YYYY-MM-DD"),
+    const body = this.state.articleBody;
+    const title = this.state.articleTitle;
+    const category = this.state.articleCategory;
+    const date = moment().format("YYYY-MM-DD");
+    if (!(body === "" || title === "")) {
+      const article = {
+        body,
+        title,
+        category,
+        date,
+      }
+      this.props.createArticle(article);
+      this.setState(() => ({
+        errors: {
+          bodyIsBlank: false,
+          titleIsBlank: false
+        }
+      }))
+    } else {
+      this.setState(() => ({
+        errors: {
+          bodyIsBlank: body === "",
+          titleIsBlank: title === ""
+        }
+      }))
     }
-    this.props.createArticle(article);
   }
 
   render() {
@@ -61,6 +94,7 @@ class CreateArticle extends Component {
           imgUrl="https://images.pexels.com/photos/38275/anonymous-studio-figure-photography-facial-mask-38275.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
         />
         <form onSubmit={this.onSubmit}>
+          {this.state.errors.titleIsBlank && <p>Title cannot be left blank</p>}
           <input
             type="text"
             name="title"
@@ -93,6 +127,7 @@ class CreateArticle extends Component {
             <option value="other" >other</option>
           </select>
           <br />
+          {this.state.errors.bodyIsBlank && <p>Body cannot be left blank</p>}
           <textarea
             name="body"
             onChange={this.onBodyChange}
