@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Comment = props => (
-  <div>
+  <div className="comment">
     <div>
-      <img src="" alt="User logo goes here" />
+      <img src="https://i.imgur.com/mECBxga.png" alt="User logo goes here" />
       <p>{props.userName}</p>
     </div>
     <p>{props.commentBody}</p>
