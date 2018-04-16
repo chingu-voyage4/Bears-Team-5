@@ -40,10 +40,7 @@ class CreateArticle extends Component {
       body: this.state.articleBody,
       title: this.state.articleTitle,
       category: this.state.articleCategory,
-      date: moment.now(),
-      slug: slugify(this.state.articleTitle),
-      likes: 0,
-      user_id: uuid()
+      date: moment.now().format("YYYY-MM-DD"),
     }
     this.props.createArticle(article);
   }
