@@ -10,7 +10,8 @@ class CreateArticle extends Component {
   state = {
     articleBody: '',
     articleTitle: '',
-    articleCategory: 'technology'
+    articleCategory: 'technology',
+    imgUrl: ''
   };
 
   onTitleChange = e => {
@@ -31,6 +32,13 @@ class CreateArticle extends Component {
     const value = e.target.value;
     this.setState({
       articleCategory: value,
+    });
+  };
+
+  onURLChange = e => {
+    const value = e.target.value;
+    this.setState({
+      imgUrl: value,
     });
   };
 
@@ -99,6 +107,22 @@ class CreateArticle extends Component {
               width: '60%',
             }}
             value={this.state.articleBody}
+          />
+          <input
+            type="text"
+            name="imageURL"
+            onChange={this.onURLChange}
+            placeholder="Image URL (Optional)"
+            style={{
+              border: 'none',
+              display: 'block',
+              fontSize: '30px',
+              height: '50px',
+              margin: '15px auto',
+              padding: '0 10px',
+              width: '60%',
+            }}
+            value={this.state.imgUrl}
           />
           <button type="submit">Publish Article</button>
         </form>

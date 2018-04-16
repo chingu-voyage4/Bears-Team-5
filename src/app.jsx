@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 // import AppRouter from './routes/AppRouter';
-import ArticlePage from './components/ArticlePage'
+import CreateArticle from './components/CreateArticle'
 import PageHeader from './components/PageHeader'
 import './styles/styles.scss';
 
@@ -12,7 +12,7 @@ const template = (
   <Provider store={store}>
     <div>
       <PageHeader />
-      <ArticlePage />
+      <CreateArticle />
     </div>
   </Provider>
 );
