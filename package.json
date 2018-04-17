@@ -30,6 +30,7 @@
     "cors": "^2.8.4",
     "css-loader": "^0.28.10",
     "dotenv": "^5.0.1",
+    "dotenv-webpack": "^1.5.5",
     "eslint": "^4.9.0",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
