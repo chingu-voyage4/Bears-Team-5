@@ -2,7 +2,6 @@ import React from 'react';
 import UserAuthentication from './UserAuthentication';
 
 const token = localStorage.getItem('token') || '';
-console.log(token);
 
 const PageHeader = () => (
   <div className="header">
