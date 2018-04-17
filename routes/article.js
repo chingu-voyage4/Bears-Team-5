@@ -96,7 +96,6 @@ router.post('/articles', [auth,
 
         connection.query(query, values, function (err, results) {
           if (err) {
-            console.log(err);
             res.status(500).json({ msg: 'internal server error' });
             connection.release();
             return;
