@@ -4,7 +4,7 @@ import moment from 'moment';
 import slugify from 'slugify';
 import uuid from 'uuid';
 import AuthorDetails from './AuthorDetails';
-import { createArticle } from '../actions/articles';
+import { startCreateArticle } from '../actions/articles';
 
 class CreateArticle extends Component {
   state = {
@@ -167,7 +167,7 @@ class CreateArticle extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createArticle: article => dispatch(createArticle(article))
+  createArticle: article => dispatch(startCreateArticle(article))
 });
 
 export default connect(undefined, mapDispatchToProps)(CreateArticle);
