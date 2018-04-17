@@ -23,7 +23,6 @@ export const startLogIn = (userCredentials) => {
     };
     return axios(config)
       .then((response) => {
-        console.log(response.data);
         localStorage.setItem('token', response.data.token);
         dispatch(logIn(userCredentials.username));
       })
