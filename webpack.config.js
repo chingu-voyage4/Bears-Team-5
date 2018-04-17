@@ -1,6 +1,7 @@
 // entry point -> output file
 
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/app.jsx',
@@ -31,4 +32,7 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx'],
   },
+  plugins: [
+    new Dotenv()
+  ]
 };

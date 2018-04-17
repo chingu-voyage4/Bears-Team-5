@@ -2,9 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import slugify from 'slugify';
-import uuid from 'uuid';
 import AuthorDetails from './AuthorDetails';
-import { createArticle } from '../actions/articles';
+import { startCreateArticle } from '../actions/articles';
 
 class CreateArticle extends Component {
   state = {
@@ -159,6 +158,7 @@ class CreateArticle extends Component {
             }}
             value={this.state.imgUrl}
           />
+          {this.props.publishingError && <p>{this.props.publishingError}</p>}
           <button type="submit">Publish Article</button>
         </form>
       </div>
@@ -166,8 +166,12 @@ class CreateArticle extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  createArticle: article => dispatch(createArticle(article))
+const mapStateToProps = state => ({
+  publishingError: state.articles.error
 });
 
-export default connect(undefined, mapDispatchToProps)(CreateArticle);
+const mapDispatchToProps = dispatch => ({
+  createArticle: article => dispatch(startCreateArticle(article))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);
