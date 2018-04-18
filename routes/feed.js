@@ -43,13 +43,13 @@ router.get('/feeds', optionalAuth, [
               return;
             }
             idArr = followedResults.map((value) => `'${value.followed_user_id}'`).join(',');
-            query = req.query.category ? `SELECT * FROM \`article\` WHERE \`user_id\` IN ${followed ? ('( ' + idArr + ' )') : ''} category=${req.query.category} LIMIT ${maxcount}`
+            query = req.query.category ? `SELECT * FROM \`article\` WHERE \`user_id\` IN ${followed ? ('( ' + idArr + ' )') : ''} category='${req.query.category}' LIMIT ${maxcount}`
               : `SELECT * FROM \`article\` WHERE \`user_id\` IN ${followed ? ('( ' + idArr + ' )') : ''} LIMIT ${maxcount}`;
             return finishQuery();
 
           });
         } else {
-          query = req.query.category ? `SELECT \`article_id\`, \`title\`, \`body\`, \`category\`, \`date\`, \`likes\`, \`image\` FROM \`article\` WHERE category=${req.query.category} LIMIT ${maxcount}`
+          query = req.query.category ? `SELECT \`article_id\`, \`title\`, \`body\`, \`category\`, \`date\`, \`likes\`, \`image\` FROM \`article\` WHERE category='${req.query.category}' LIMIT ${maxcount}`
             : `SELECT \`article_id\`, \`title\`, \`body\`, \`category\`, \`date\`, \`likes\`, \`image\` FROM \`article\` LIMIT ${maxcount}`;
           return finishQuery();
         }
@@ -57,6 +57,7 @@ router.get('/feeds', optionalAuth, [
         function finishQuery() {
           connection.query(query, function (err, results) {
             if (err) {
+              console.log(err);
               res.status(500).json({ msg: 'internal server error' });
               connection.release();
               return;
