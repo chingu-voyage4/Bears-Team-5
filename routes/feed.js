@@ -13,7 +13,7 @@ router.get('/feeds', optionalAuth, [
       .includes(value.toLowerCase());
   }),
   query('followed', 'followed must be a boolean value').optional().isBoolean(),
-  query('maxcount', 'maxcount must be a valid integer').optional().isInt()
+  query('maxcount', 'maxcount must be a valid integer').optional().isInt().custom((value) => value > 0)
 ],
   function (req, res) {
     const errorFormatter = ({ msg, param }) => {
