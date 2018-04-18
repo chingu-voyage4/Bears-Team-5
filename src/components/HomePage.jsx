@@ -20,9 +20,7 @@ const HomePage = props => (
         props.latestArticles.map(article => (
           <div key={Math.floor(Math.random() * 9999)}>
             <h3>{article.title}</h3>
-            <p>{article.subtitle}</p>
-            <p>{article.author}</p>
-            <img src={article.articleImgURL} alt="article thumbnail" height="300" width="300" />
+            <img src={article.image} alt="article thumbnail" height="300" width="300" />
           </div>
         ))
       )}
@@ -52,7 +50,7 @@ HomePage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  latestArticles: state.articles
+  latestArticles: state.articles.feed
 });
 
 export default connect(mapStateToProps)(HomePage);
