@@ -76,7 +76,8 @@ class CreateArticle extends Component {
           bodyIsBlank: false,
           titleIsBlank: false
         }
-      }))
+      }));
+      this.props.history.push("/");
     } else {
       this.setState(() => ({
         errors: {
