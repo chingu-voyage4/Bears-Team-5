@@ -31,3 +31,29 @@ export const startCreateArticle = (article) => {
       })
   }
 }
+
+export const setArticles = articles => ({
+  type: "SET_ARTICLES",
+  articles
+});
+
+export const startSetArticles = (dispatch) => {
+  return (dispatch) => {
+    const url = `${process.env.DB_URL}${"api/feeds"}`;
+    const config = {
+      url,
+      method: 'get',
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    };
+    return axios(config)
+      .then(response => {
+        const articles = response.data.articles;
+        dispatch(setArticles(articles));
+      })
+      .catch(error => (
+        console.log(error)
+      ))
+  }
+}
