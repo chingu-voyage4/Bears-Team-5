@@ -4,7 +4,7 @@ Guests and users can read articles feeds of different types using different filt
 
 ## **get feed**
 ----
-get a list of articles by providing the desired listing filters
+get a list of articles by providing the desired listing filters, lists are ordered by date from newest to oldest.
 
 * **URL**
 
