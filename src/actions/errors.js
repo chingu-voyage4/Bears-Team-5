@@ -1,11 +1,11 @@
-export const setLoginErrors = errors => ({
-  type: 'SET_LOGIN_ERRORS',
-  errors
+export const setLoginErrors = loginError => ({
+  type: 'SET_LOGIN_ERROR',
+  loginError
 });
 
-export const setPublishingError = error => ({
+export const setPublishingError = publishingError => ({
   type: 'SET_ARTICLE_PUBLISHING_ERROR',
-  error
+  publishingError
 });
 
 export const clearError = errorType => ({
