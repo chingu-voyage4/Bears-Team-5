@@ -8,3 +8,8 @@ export const setPublishingError = error => ({
   error
 });
 
+export const clearError = errorType => ({
+  type: 'CLEAR_ERROR',
+  errorType
+});
+
