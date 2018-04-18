@@ -67,7 +67,10 @@ router.get('/feeds', optionalAuth, [
               value.date = moment.parseZone(value.date).format('YYYY-MM-DD');
               delete value.user_id;
               return value;
-            });
+            })
+              .sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+              });
             return res.status(200).json({ articles: results });
           });
         }
