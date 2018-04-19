@@ -11,7 +11,6 @@ const ProfilePage = props => (
     <p>{props.numFollowing} following</p>
     <p>{props.numFollowers} followers</p>
     <img src={props.userImgURL} height="30px" width="30px" />
-    <ArticleList type="Liked Articles" articles={props.likedArticles} />
     <ArticleList type="Published Articles" articles={props.publishedArticles} />
     <div>
       Icons made by{' '}
