@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import parser from 'html-react-parser';
+import marked from 'marked';
 import AuthorDetails from './AuthorDetails';
 import Comments from './Comments';
 
@@ -11,7 +13,9 @@ const ArticlePage = props => (
       details="Leader of the Chicken Uprising, sworn enemy of KFC"
     />
     <h2 className="article__title">{props.article.title}</h2>
-    <p>{props.article.body}</p>
+    {
+      parser(marked(props.article.body))
+    }
     <AuthorDetails
       imgUrl="https://i.imgur.com/hyqmyzn.png"
       name="Colonel Cockerel"
