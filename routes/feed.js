@@ -13,7 +13,7 @@ router.get('/feeds', optionalAuth, [
       .includes(value.toLowerCase());
   }),
   query('followed', 'followed must be a boolean value').optional().isBoolean(),
-  query('maxcount', 'maxcount must be a valid integer').optional().isInt().custom((value) => value > 0)
+  query('maxcount', 'maxcount must be a valid integer').optional().isInt().custom((value) => value > 0 && value < 51)
 ],
   function (req, res) {
     const errorFormatter = ({ msg, param }) => {
@@ -57,21 +57,38 @@ router.get('/feeds', optionalAuth, [
         function finishQuery() {
           connection.query(query, function (err, results) {
             if (err) {
-              console.log(err);
               res.status(500).json({ msg: 'internal server error' });
               connection.release();
               return;
             }
-            connection.release();
             results = results.map((value) => {
-              value.date = moment.parseZone(value.date).format('YYYY-MM-DD');
-              delete value.user_id;
-              return value;
+              return new Promise(function (resolve, reject) {
+                value.date = moment.parseZone(value.date).format('YYYY-MM-DD');
+                connection.query('SELECT `username`, `avatar` FROM `user` WHERE `user_id` = ?', [value.user_id], function (err, userResults) {
+                  if (err) {
+                    res.status(500).json({ msg: 'internal server error' });
+                    connection.release();
+                    reject();
+                    return;
+                  }
+                  value.username = userResults[0].username;
+                  value.avatar = userResults[0].avatar;
+                  delete value.user_id;
+                  resolve(value);
+                  return value;
+                });
+              });
             })
-              .sort((a, b) => {
+            Promise.all(results).then((resultFinal) => {
+              resultFinal.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
               });
-            return res.status(200).json({ articles: results });
+              connection.release();
+              res.status(200).json({ articles: resultFinal });
+            }).catch((e) => {
+              connection.release();
+              res.status(500).json({ msg: 'internal server error' });
+            });
           });
         }
       });
