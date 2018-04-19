@@ -40,10 +40,8 @@ export const setArticles = articles => ({
 export const startSetArticles = (dispatch) => {
   return (dispatch, getState) => {
     const category = getState().articles.category;
-    console.log(category);
     const params = (category ? `?category=${category}` : '');
     const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
-    console.log(url);
     const config = {
       url,
       method: 'get',
