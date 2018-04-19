@@ -29,7 +29,7 @@ class HomePage extends Component {
         ) : (
             this.props.latestArticles.map(article => (
               <div key={Math.floor(Math.random() * 9999)}>
-                <Link to={`/articles/${article.slug}`}>
+                <Link to={`/articles/view/${article.slug}`}>
                   <h3>{article.title}</h3>
                   <img src={article.image} alt="article thumbnail" height="300" width="300" />
                 </Link>

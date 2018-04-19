@@ -12,7 +12,7 @@ const AppRouter = () => {
           <div>
               <PageHeader />
               <Route exact path="/" component={Homepage} />
-              <Route path="/articles/:slug" component={ArticlePage} />
+              <Route exact path="/articles/view/:slug" component={ArticlePage} />
               <PrivateRoute path="/articles/create" component={CreateArticle} />
             </div>
         </BrowserRouter>
