@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { setCategory, startSetArticles } from '../actions/articles';
 
 class HomePage extends Component {
@@ -28,8 +29,10 @@ class HomePage extends Component {
         ) : (
             this.props.latestArticles.map(article => (
               <div key={Math.floor(Math.random() * 9999)}>
-                <h3>{article.title}</h3>
-                <img src={article.image} alt="article thumbnail" height="300" width="300" />
+                <Link to={`/articles/${article.slug}`}>
+                  <h3>{article.title}</h3>
+                  <img src={article.image} alt="article thumbnail" height="300" width="300" />
+                </Link>
               </div>
             ))
           )}
