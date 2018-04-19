@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import ArticleList from './ArticleList';
 
 const ProfilePage = props => (
@@ -34,18 +35,16 @@ const ProfilePage = props => (
 );
 
 ProfilePage.propTypes = {
-  username: PropTypes.string.isRequired,
-  numFollowing: PropTypes.number.isRequired,
-  numFollowers: PropTypes.number.isRequired,
-  likedArticles: PropTypes.array,
   publishedArticles: PropTypes.array,
   userImgURL: PropTypes.string
 };
 
 ProfilePage.defaultProps = {
   userImgURL: 'https://i.imgur.com/mECBxga.png',
-  likedArticles: [],
-  publishedArticles: []
 };
 
-export default ProfilePage;
+const mapStateToProps = (state, props) => ({
+  publishedArticles: state.articles.feed.filter(article => article.username === props.match.params.username)
+});
+
+export default connect(mapStateToProps)(ProfilePage);
