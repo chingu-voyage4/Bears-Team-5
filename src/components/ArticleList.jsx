@@ -12,17 +12,15 @@ const ArticleList = props => (
     {props.articles.length === 0
       ? `You have not ${props.type === 'Liked Articles' ? 'liked' : 'published'} any articles`
       : props.articles.map((article) => {
-          console.log(article.author.username);
-          return (
-            <ArticleListItem
-              articleTitle={article.title}
-              articleAuthor={article.author.username}
-              details={article.author.details}
-              articleImg="https://static.pexels.com/photos/65834/pexels-photo-65834.jpeg"
-              key={Math.floor(Math.random() * 99999)}
-            />
-          );
-        })}
+        return (
+          <ArticleListItem
+            articleTitle={article.title}
+            articleAuthor={props.username}
+            articleImg="https://static.pexels.com/photos/65834/pexels-photo-65834.jpeg"
+            key={Math.floor(Math.random() * 99999)}
+          />
+        );
+      })}
   </div>
 );
 
