@@ -60,6 +60,7 @@ class CreateArticle extends Component {
     const body = this.state.articleBody;
     const title = this.state.articleTitle;
     const category = this.state.articleCategory;
+    const image = this.state.imgUrl;
     const date = moment().format("YYYY-MM-DD");
     if (!(body === "" || title === "")) {
       const article = {
@@ -67,6 +68,7 @@ class CreateArticle extends Component {
         title,
         category,
         date,
+        image
       }
       this.props.createArticle(article);
       this.setState(() => ({
@@ -74,7 +76,8 @@ class CreateArticle extends Component {
           bodyIsBlank: false,
           titleIsBlank: false
         }
-      }))
+      }));
+      this.props.history.push("/");
     } else {
       this.setState(() => ({
         errors: {

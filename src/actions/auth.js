@@ -1,13 +1,9 @@
 import axios from 'axios';
+import { setLoginErrors, clearError } from './errors';
 
 export const logIn = username => ({
   type: 'LOG_IN',
   username
-});
-
-export const setErrors = errors => ({
-  type: 'SET_ERRORS',
-  errors
 });
 
 export const startLogIn = (userCredentials) => {
@@ -23,12 +19,13 @@ export const startLogIn = (userCredentials) => {
     };
     return axios(config)
       .then((response) => {
+        dispatch(clearError('loginError'));
         localStorage.setItem('token', response.data.token);
         dispatch(logIn(userCredentials.username));
       })
       .catch((error) => {
         const errorMsg = error.response.data.msg;
-        dispatch(setErrors([errorMsg]));
+        dispatch(setLoginErrors(errorMsg));
       });
   };
 };
