@@ -4,7 +4,7 @@ signed-in users can follow and unfollow other users.
 
 ## **follow user**
 ----
-  follow the user with the provided `followedid`.
+  follow the user with the provided `username`.
 
 * **URL**
 
@@ -16,9 +16,9 @@ signed-in users can follow and unfollow other users.
 
 * **Request Body Params**
 
-| parameter             | required           | description                       |
-| :-------------------: | :----------------: | :-------------------------------- |
-| `followedid`[integer] | :heavy_check_mark: | the ID of the user to be followed |
+| parameter          | required           | description                             |
+| :----------------: | :----------------: | :-------------------------------------- |
+| `username`[string] | :heavy_check_mark: | the username of the user to be followed |
 
 * **Success Response:**
 
@@ -39,8 +39,8 @@ signed-in users can follow and unfollow other users.
     "msg": "missing or invalid info",
     "errors": [
         {
-            "msg": "followed user id must be a valid existing user id",
-            "param": "followedid"
+            "msg": "username must be a valid existing user's username",
+            "param": "username"
     ]
 }
 ```
@@ -75,7 +75,7 @@ $.ajax({
     },
   dataType: "json",
   data : { 
-	"followedid" : 549
+	"username" : "chris"
   },
   type : "POST",
   success : function(r) {
@@ -91,7 +91,7 @@ $.ajax({
 
   ## **unfollow user**
 ----
-  unfollow the user with the provided `followedid`.
+  unfollow the user with the provided `username`.
 
 * **URL**
 
@@ -103,9 +103,9 @@ $.ajax({
 
 * **Request Body Params**
 
-| parameter             | required           | description                         |
-| :-------------------: | :----------------: | :---------------------------------- |
-| `followedid`[integer] | :heavy_check_mark: | the ID of the user to be unfollowed |
+| parameter          | required           | description                               |
+| :----------------: | :----------------: | :---------------------------------------- |
+| `username`[string] | :heavy_check_mark: | the username of the user to be unfollowed |
 
 * **Success Response:**
 
@@ -126,8 +126,8 @@ $.ajax({
     "msg": "missing or invalid info",
     "errors": [
         {
-            "msg": "followed user id must be a valid existing user id",
-            "param": "followedid"
+            "msg": "username must be a valid existing user's username",
+            "param": "username"
     ]
 }
 ```
@@ -162,7 +162,7 @@ $.ajax({
     },
   dataType: "json",
   data : { 
-	"followedid" : 549
+	"username" : "chris"
   },
   type : "DELETE",
   success : function(r) {

@@ -218,7 +218,10 @@ $.ajax({
               "date": "2018-01-18",
               "likes": 0,
               "image": "http://www.greenhomeguide.com/sites/default/files/default_images/default-article_0.png",
-              "personal": false
+              "username" : "chris",
+              "avatar": "https://static.productionready.io/images/smiley-cyrus.jpg",
+              "personal": false,
+              "liked": false
           }
       }
     ```
@@ -249,7 +252,7 @@ $.ajax({
 
 * **Notes:**
 
-  success response contains all the article's info, the `personal` boolean value is true if the user is logged-in (the JWT token must be included in the `Authorization` header) and is the original creator of the article, else it's value is false.
+  success response contains all the article's info, the `personal` boolean value shows whether the currently logged-in user is the original creator of the article or not (the JWT token must be included in the `Authorization` header) and the `liked` boolean value shows if he liked it or not, if the user is not logged-in the value of `liked` will be `false`.
 
 
 ## **delete article**
