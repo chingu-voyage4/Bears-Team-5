@@ -18,7 +18,7 @@ get a list of articles by providing the desired listing filters, lists are order
 
 | parameter           | required | description                                                                                                                                                                                                          |
 | :-----------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `maxcount`[integer] |          | desired maximum number of articles to get, default is 20                                                                                                                                                             |
+| `maxcount`[integer] |          | desired maximum number of articles to get, default is 20, maximum is 50                                                                                                                                              |
 | `followed`[boolean] |          | whether or not to only display articles from the users you follow, default is false                                                                                                                                  |
 | `category`[string]  |          | desired category of the articles, must be a single value from 'technology', 'culture', 'entrepreneurship', 'creativity', 'self', 'politics', 'media', 'productivity', 'design', 'popular' or 'other', default is any |
 
@@ -36,7 +36,9 @@ get a list of articles by providing the desired listing filters, lists are order
             "category": "technology",
             "date": "2014-04-16",
             "likes": 1,
-            "image": "http://www.greenhomeguide.com/sites/default/files/default_images/default-article_0.png"
+            "image": "http://www.greenhomeguide.com/sites/default/files/default_images/default-article_0.png",
+            "username": "chris",
+            "avatar": "http://images.com/new/2018.png"
         },
         {
             "article_id": 373,
@@ -45,7 +47,9 @@ get a list of articles by providing the desired listing filters, lists are order
             "category": "culture",
             "date": "2017-05-22",
             "likes": 0,
-            "image": "http://www.greenhomeguide.com/sites/default/files/default_images/default-article_0.png"
+            "image": "http://www.greenhomeguide.com/sites/default/files/default_images/default-article_0.png",
+            "username": "john",
+            "avatar": "http://images.com/new/2018.png"
         }
         ]
       }
