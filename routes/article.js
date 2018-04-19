@@ -58,15 +58,26 @@ router.get('/articles/:slug', [function (req, res, next) {
           connection.release();
           return;
         }
-        connection.release();
         if (results[0].user_id === req.authData.id) {
           req.results.personal = true;
+        } else { req.results.personal = false; }
+
+        connection.query('SELECT * FROM `like` WHERE `article_id`=? AND `user_id`=?', [req.results.article_id, req.authData.id], function (err, likeResults) {
+          if (err) {
+            res.status(500).json({ msg: 'internal server error' });
+            connection.release();
+            return;
+          }
+          connection.release();
+          if (likeResults.length > 0) { req.results.liked = true; }
+          else { req.results.liked = false; }
           return res.status(200).json({ article: req.results });
-        }
+        });
       });
     });
   } else {
     req.results.personal = false;
+    req.results.liked = false;
     return res.status(200).json({ article: req.results });
   }
 }])
