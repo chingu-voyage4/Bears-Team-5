@@ -49,8 +49,8 @@ router.get('/feeds', optionalAuth, [
 
           });
         } else {
-          query = req.query.category ? `SELECT \`article_id\`, \`title\`, \`body\`, \`category\`, \`date\`, \`likes\`, \`image\` FROM \`article\` WHERE category='${req.query.category}' LIMIT ${maxcount}`
-            : `SELECT \`article_id\`, \`title\`, \`body\`, \`category\`, \`date\`, \`likes\`, \`image\` FROM \`article\` LIMIT ${maxcount}`;
+          query = req.query.category ? `SELECT * FROM \`article\` WHERE category='${req.query.category}' LIMIT ${maxcount}`
+            : `SELECT * FROM \`article\` LIMIT ${maxcount}`;
           return finishQuery();
         }
 
