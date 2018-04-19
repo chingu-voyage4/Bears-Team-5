@@ -12,13 +12,13 @@ export const createArticle = article => ({
 
 export const startCreateArticle = (article) => {
   return (dispatch) => {
-    const url = `${process.env.DB_URL}${"api/articles"}`;
+    const url = `${process.env.DB_URL}${'api/articles'}`;
     const config = {
       url,
       method: 'post',
       data: JSON.stringify(article),
       headers: {
-        'Authorization': localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json'
       }
     };
@@ -26,34 +26,43 @@ export const startCreateArticle = (article) => {
       .then(response => (
         dispatch(createArticle(article))
       )).catch((error) => {
-        const errorMsg = "An error occured while trying to publish your article. Please try again.";
+        const errorMsg = 'An error occured while trying to publish your article. Please try again.';
         dispatch(setError(errorMsg));
-      })
-  }
-}
+      });
+  };
+};
 
 export const setArticles = articles => ({
-  type: "SET_ARTICLES",
+  type: 'SET_ARTICLES',
   articles
 });
 
 export const startSetArticles = (dispatch) => {
-  return (dispatch) => {
-    const url = `${process.env.DB_URL}${"api/feeds"}`;
+  return (dispatch, getState) => {
+    const category = getState().articles.category;
+    console.log(category);
+    const params = (category ? `?category=${category}` : '');
+    const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
+    console.log(url);
     const config = {
       url,
       method: 'get',
       headers: {
-        'Authorization': localStorage.getItem('token')
+        Authorization: localStorage.getItem('token')
       }
     };
     return axios(config)
-      .then(response => {
+      .then((response) => {
         const articles = response.data.articles;
         dispatch(setArticles(articles));
       })
       .catch(error => (
         console.log(error)
-      ))
-  }
-}
+      ));
+  };
+};
+
+export const setCategory = category => ({
+  type: 'SET_CATEGORY',
+  category
+});
