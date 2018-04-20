@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ArticleList from './ArticleList';
 
 const ProfilePage = props => (
@@ -8,6 +9,7 @@ const ProfilePage = props => (
     <h2>
       <strong>{props.match.params.username}</strong>
     </h2>
+    <Link to="/articles/create" >Publish New Article</Link>
     <ArticleList type="Published Articles" articles={props.publishedArticles} username={props.match.params.username} />
     <div>
       Icons made by{' '}
