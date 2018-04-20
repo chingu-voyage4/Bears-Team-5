@@ -4,9 +4,8 @@ import AuthorDetails from './AuthorDetails';
 
 const ArticleListItem = props => (
   <div >
-    <AuthorDetails name={props.articleAuthor} />
-    <img src={props.articleImg} height="250px" width="600px" />
     <h3>{props.articleTitle}</h3>
+    <img src={props.articleImg} height="250px" width="600px" />
   </div>
 );
 
