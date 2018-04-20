@@ -14,6 +14,12 @@ class EditArticle extends Component {
     errors: {
       titleIsBlank: false,
       bodyIsBlank: false,
+    },
+    isUpdated: {
+      body: false,
+      title: false,
+      category: false,
+      image: false,
     }
   };
 
