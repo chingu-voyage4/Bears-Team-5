@@ -7,6 +7,9 @@ import Comments from './Comments';
 import { startSetCurrentArticle } from '../actions/articles';
 
 class ArticlePage extends Component {
+  state = {
+    liked: false
+  }
   componentDidMount() {
     this.props.setCurrentArticle(this.props.match.params.slug);
   }
@@ -65,7 +68,8 @@ class ArticlePage extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  article: state.articles.feed.find(article => article.slug === props.match.params.slug)
+  article: state.articles.feed.find(article => article.slug === props.match.params.slug),
+  currentArticle: state.articles.currentArticle
 });
 
 const mapDispatchToProps = dispatch => ({
