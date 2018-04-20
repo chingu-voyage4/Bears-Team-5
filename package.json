@@ -2,7 +2,7 @@
   "name": "medium-clone",
   "version": "1.0.0",
   "description": "a basic medium.com clone",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "",
     "dev-server": "webpack-dev-server --mode development"
