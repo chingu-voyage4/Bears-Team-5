@@ -21,6 +21,7 @@ export const startLogIn = (userCredentials) => {
       .then((response) => {
         dispatch(clearError('loginError'));
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', userCredentials.username);
         dispatch(logIn(userCredentials.username));
       })
       .catch((error) => {
