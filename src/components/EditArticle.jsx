@@ -78,8 +78,8 @@ class EditArticle extends Component {
     } else {
       this.setState(() => ({
         errors: {
-          bodyIsBlank: body === "",
-          titleIsBlank: title === ""
+          bodyIsBlank: newbody === "",
+          titleIsBlank: newtitle === ""
         }
       }))
     }

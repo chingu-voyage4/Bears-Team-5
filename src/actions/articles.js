@@ -74,12 +74,15 @@ export const editArticle = (id, updates) => ({
 export const startEditArticle = (id, updates) => {
   return (dispatch) => {
     const url = `${process.env.DB_URL}${'api/articles'}`;
-    const data = { article_id: parseInt(id), ...updates };
+    const data = {
+      article_id: parseInt(id),
+      ...updates
+    };
     console.log(data);
     const config = {
       url,
       method: 'patch',
-      updates: JSON.stringify(data),
+      data: JSON.stringify(data),
       headers: {
         Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -87,10 +90,8 @@ export const startEditArticle = (id, updates) => {
     };
     return axios(config)
       .then((response) => {
-        console.log(response);
         dispatch(editArticle(id, updates));
       }).catch((error) => {
-        console.log(error.response.data.errors);
         const errorMsg = 'An error occured while trying to publish your article. Please try again.';
         dispatch(setError(errorMsg));
       });
