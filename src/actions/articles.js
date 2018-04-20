@@ -19,7 +19,7 @@ export const startCreateArticle = (article) => {
       method: 'post',
       data: JSON.stringify(article),
       headers: {
-        'Authorization': localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json'
       }
     };
@@ -92,6 +92,31 @@ export const startEditArticle = (id, updates) => {
     return axios(config)
       .then((response) => {
         dispatch(editArticle(id, updates));
+      }).catch((error) => {
+        const errorMsg = 'An error occured while trying to publish your article. Please try again.';
+        dispatch(setError(errorMsg));
+      });
+  };
+};
+
+export const setCurrentArticle = currentArticle => ({
+  type: 'SET_CURRENT_ARTICLE',
+  currentArticle
+});
+
+export const startSetCurrentArticle = (slug) => {
+  return (dispatch) => {
+    const url = `${process.env.DB_URL}${'api/articles/'}${slug}`;
+    const config = {
+      url,
+      method: 'get',
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      }
+    };
+    return axios(config)
+      .then((response) => {
+        dispatch(setCurrentArticle(response.data.article));
       }).catch((error) => {
         const errorMsg = 'An error occured while trying to publish your article. Please try again.';
         dispatch(setError(errorMsg));

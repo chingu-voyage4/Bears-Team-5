@@ -11,14 +11,15 @@ export default (state = articlesReducerDefaultState, action) => {
             ...article,
             ...action.updates
           };
-        } else {
-          return article;
         }
+        return article;
       });
     case 'SET_ARTICLES':
       return { ...state, feed: action.articles };
     case 'SET_CATEGORY':
       return { ...state, category: action.category };
+    case 'SET_CURRENT_ARTICLE':
+      return { ...state, currentArticle: action.currentArticle };
     default:
       return state;
   }
