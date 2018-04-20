@@ -13,6 +13,7 @@ const PageHeader = () => (
     ) : (
       <Link to={`/profile/${username}`} >
           Welcome, {username}!
+          <button>Log Out</button>
         </Link>
       )}
   </div>
