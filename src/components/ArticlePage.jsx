@@ -51,33 +51,21 @@ class ArticlePage extends Component {
         </div>
         <h3>Suggested Articles</h3>
         <ul className="article__suggestions">
-          <li>
-            <a href="#">
-              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
-              <div>
-                <h3>Suggested Article</h3>
-                <AuthorDetails name="Name Goes Here" />
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
-              <div>
-                <h3>Suggested Article</h3>
-                <AuthorDetails name="Name Goes Here" />
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
-              <div>
-                <h3>Suggested Article</h3>
-                <AuthorDetails name="Name Goes Here" />
-              </div>
-            </a>
-          </li>
+          {this.props.suggestedArticles.map((article, index) => {
+            return index < 3 ? (
+              <li key={Math.floor(Math.random() * 99999)}>
+                <a href="#">
+                  <img src={article.image} />
+                  <div>
+                    <h3>{article.title}</h3>
+                    <AuthorDetails name={article.username} />
+                  </div>
+                </a>
+              </li>
+            ) : (
+                null
+              )
+          })}
         </ul>
       </div>
     );
@@ -85,6 +73,9 @@ class ArticlePage extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
+  suggestedArticles: state.articles.feed.filter(article => (
+    article.username !== localStorage.getItem("username")
+  )),
   article: state.articles.feed.find(article => article.slug === props.match.params.slug),
   currentArticle: state.articles.currentArticle
 });
