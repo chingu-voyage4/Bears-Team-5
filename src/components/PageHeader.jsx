@@ -6,6 +6,11 @@ const token = localStorage.getItem('token') || '';
 const username = localStorage.getItem('username');
 
 class PageHeader extends Component {
+  logOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+  }
+
   render() {
     return (
       <div className="header">
@@ -15,7 +20,7 @@ class PageHeader extends Component {
         ) : (
           <Link to={`/profile/${username}`} >
               Welcome, {username}!
-              <button>Log Out</button>
+              <button onClick={this.logOut} >Log Out</button>
             </Link>
           )}
       </div>
