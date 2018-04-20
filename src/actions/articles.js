@@ -1,19 +1,13 @@
 import axios from 'axios';
 
-export const setError = error => ({
-  type: 'SET_ERROR',
-  error
-});
-
 export const createArticle = article => ({
   type: 'CREATE_ARTICLE',
   article
 });
 
-
-export const startCreateArticle = (article) => {
+export const startCreateArticle = article => {
   return (dispatch) => {
-    const url = `${process.env.DB_URL}${'api/articles'}`;
+    const url = process.env.DB_URL + "api/articles";
     const config = {
       url,
       method: 'post',

@@ -1,4 +1,4 @@
-const articlesReducerDefaultState = {};
+const articlesReducerDefaultState = [];
 
 export default (state = articlesReducerDefaultState, action) => {
   switch (action.type) {
