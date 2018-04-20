@@ -10,6 +10,7 @@ export const createArticle = article => ({
   article
 });
 
+
 export const startCreateArticle = (article) => {
   return (dispatch) => {
     const url = `${process.env.DB_URL}${'api/articles'}`;
@@ -18,7 +19,7 @@ export const startCreateArticle = (article) => {
       method: 'post',
       data: JSON.stringify(article),
       headers: {
-        Authorization: localStorage.getItem('token'),
+        'Authorization': localStorage.getItem('token'),
         'Content-Type': 'application/json'
       }
     };
