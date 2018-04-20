@@ -60,6 +60,35 @@ export const startSetArticles = (category) => {
   };
 };
 
+export const setArticlesByFollowedAuthors = articles => ({
+  type: 'SET_ARTICLES_BY_FOLLOWED_AUTHORS',
+  articles
+});
+
+export const startSetArticlesByFollowedAuthors = () => {
+  return (dispatch, getState) => {
+    const params = `?followed=${true}`;
+    const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
+    console.log(url);
+    const config = {
+      url,
+      method: 'get',
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    };
+    return axios(config)
+      .then((response) => {
+        const articles = response.data.articles;
+        console.log(articles);
+        return dispatch(setArticlesByFollowedAuthors(articles));
+      })
+      .catch(error => (
+        console.log(error)
+      ));
+  };
+};
+
 export const setCategory = category => ({
   type: 'SET_CATEGORY',
   category
