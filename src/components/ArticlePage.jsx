@@ -4,7 +4,7 @@ import parser from 'html-react-parser';
 import marked from 'marked';
 import AuthorDetails from './AuthorDetails';
 import Comments from './Comments';
-import { startSetCurrentArticle } from '../actions/articles';
+import { startSetCurrentArticle, startLikeArticle } from '../actions/articles';
 
 class ArticlePage extends Component {
   state = {
@@ -20,6 +20,13 @@ class ArticlePage extends Component {
     });
   }
 
+  onClick = (e) => {
+    const article_id = this.props.article.article_id;
+    this.props.likeArticle(article_id).then(() => (
+      this.props.setCurrentArticle(this.props.match.params.slug)
+    ));
+  }
+
   render() {
     return (
       <div className="article container">
@@ -31,12 +38,8 @@ class ArticlePage extends Component {
         {
           parser(marked(this.props.article.body))
         }
-        <AuthorDetails
-          imgUrl={this.props.article.avatar}
-          name={this.props.article.username}
-        />
         <div>
-          {this.props.article.username !== this.state.currentUser && <button>{this.state.liked ? 'unlike' : 'like'}</button>}
+          {this.props.article.username !== this.state.currentUser && <button onClick={this.onClick}>{this.state.liked ? 'unlike' : 'like'}</button>}
         </div>
         <h3>Suggested Articles</h3>
         <ul className="article__suggestions">
@@ -79,7 +82,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentArticle: slug => dispatch(startSetCurrentArticle(slug))
+  setCurrentArticle: slug => dispatch(startSetCurrentArticle(slug)),
+  likeArticle: article_id => dispatch(startLikeArticle(article_id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);
