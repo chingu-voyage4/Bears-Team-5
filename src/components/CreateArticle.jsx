@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import slugify from 'slugify';
+import uuid from 'uuid';
 import AuthorDetails from './AuthorDetails';
 import { startCreateArticle } from '../actions/articles';
 
@@ -60,7 +61,6 @@ class CreateArticle extends Component {
     const body = this.state.articleBody;
     const title = this.state.articleTitle;
     const category = this.state.articleCategory;
-    const image = this.state.imgUrl;
     const date = moment().format("YYYY-MM-DD");
     if (!(body === "" || title === "")) {
       const article = {
@@ -68,7 +68,6 @@ class CreateArticle extends Component {
         title,
         category,
         date,
-        image
       }
       this.props.createArticle(article);
       this.setState(() => ({
@@ -76,8 +75,7 @@ class CreateArticle extends Component {
           bodyIsBlank: false,
           titleIsBlank: false
         }
-      }));
-      this.props.history.push("/");
+      }))
     } else {
       this.setState(() => ({
         errors: {
@@ -161,7 +159,6 @@ class CreateArticle extends Component {
             }}
             value={this.state.imgUrl}
           />
-          {this.props.publishingError && <p>{this.props.publishingError}</p>}
           <button type="submit">Publish Article</button>
         </form>
       </div>
@@ -169,12 +166,8 @@ class CreateArticle extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  publishingError: state.articles.error
-});
-
 const mapDispatchToProps = dispatch => ({
   createArticle: article => dispatch(startCreateArticle(article))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);
+export default connect(undefined, mapDispatchToProps)(CreateArticle);

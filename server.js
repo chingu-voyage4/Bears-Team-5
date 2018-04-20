@@ -2,8 +2,8 @@ const express = require('express');
 const users = require('./routes/user');
 const articles = require('./routes/article');
 const likes = require('./routes/like');
-const follows = require('./routes/follow');
 const feeds = require('./routes/feed');
+const follows = require('./routes/follow')
 const bodyParser = require('body-parser');
 const cors = require('cors');
 

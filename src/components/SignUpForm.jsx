@@ -52,7 +52,7 @@ export default class SignUpForm extends Component {
       confirmpassword: this.state.confirmPassword,
       email: this.state.email
     };
-    const url = 'http://localhost:4000/api/user';
+    const url = 'http://localhost:4000/api/register';
     axios({
       url,
       method: 'post',

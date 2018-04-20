@@ -5,20 +5,20 @@ const auth = require('./middleware/auth');
 const router = express.Router();
 
 router.post('/follows', [auth,
-  body('username', 'username must be a valid existing user\'s username').exists().isLength({ min: 4, max: 15 }).custom((value) => {
+  body('followedid', 'followed user id must be a valid existing user id').exists().isNumeric().custom((value) => {
     return new Promise(function (resolve, reject) {
       db.getConnection(function (err, connection) {
         if (err) {
           reject(new Error('internal server error'));
           return;
         }
-        connection.query('SELECT `username` FROM `user` WHERE `username`=?', [value], function (err, results) {
+        connection.query('SELECT `username` FROM `user` WHERE `user_id`=?', [value], function (err, results) {
           if (err) {
             reject(new Error('internal server error'));
             connection.release();
             return;
           }
-          if (results.length === 0) reject(new Error('username is missing or invalid'));
+          if (results.length === 0) reject(new Error('user id is missing or invalid'));
           connection.release();
           resolve(results);
         });
@@ -38,64 +38,55 @@ router.post('/follows', [auth,
         return res.status(422).json({ msg: 'missing or invalid info', errors: errors.array({ onlyFirstError: true }) });
       }
     } else {
+      if (req.authData.id === req.body.followedid) {
+        return res.status(422).json({ msg: 'missing or invalid info' });
+      }
       db.getConnection(function (err, connection) {
         if (err) {
           res.status(500).json({ msg: 'internal server error' });
           return;
         }
-        connection.query('SELECT `user_id` FROM `user` WHERE `username`=?', [req.body.username], function (err, userResults) {
+        connection.query('SELECT * FROM `follow` WHERE `user_id`=? AND `followed_user_id`=?', [req.authData.id, req.body.followedid], function (err, results) {
           if (err) {
             res.status(500).json({ msg: 'internal server error' });
             connection.release();
             return;
           }
-          if (userResults[0].user_id === req.authData.id) {
+          if (results.length > 0) {
             connection.release();
-            return res.status(422).json({ msg: 'missing or invalid info', });
+            res.status(422).json({ msg: 'missing or invalid info' });
+            return;
           }
-          connection.query('SELECT * FROM `follow` WHERE `user_id`=? AND `followed_user_id`=?', [req.authData.id, userResults[0].user_id], function (err, results) {
-            if (err) {
-              res.status(500).json({ msg: 'internal server error' });
-              connection.release();
-              return;
-            }
-            if (results.length > 0) {
-              connection.release();
-              res.status(422).json({ msg: 'missing or invalid info' });
-              return;
-            }
-            connection.query('INSERT INTO `follow` (user_id, followed_user_id) VALUES (?, ?);',
-              [req.authData.id, userResults[0].user_id], function (err, results) {
-                if (err) {
-                  res.status(500).json({ msg: 'internal server error' });
-                  connection.release();
-                  return;
-                }
+          connection.query('INSERT INTO `follow` (user_id, followed_user_id) VALUES (?, ?);',
+            [req.authData.id, req.body.followedid], function (err, results) {
+              if (err) {
+                res.status(500).json({ msg: 'internal server error' });
                 connection.release();
-                res.status(201).json({ msg: 'successful' })
-              });
-          })
+                return;
+              }
+              connection.release();
+              res.status(201).json({ msg: 'successful' })
+            });
         })
       })
     }
   });
 
-
 router.delete('/follows', [auth,
-  body('username', 'username must be a valid existing user\'s username').exists().isLength({ min: 4, max: 15 }).custom((value) => {
+  body('followedid', 'followed user id must be a valid existing user id').exists().isNumeric().custom((value) => {
     return new Promise(function (resolve, reject) {
       db.getConnection(function (err, connection) {
         if (err) {
           reject(new Error('internal server error'));
           return;
         }
-        connection.query('SELECT `username` FROM `user` WHERE `username`=?', [value], function (err, results) {
+        connection.query('SELECT `username` FROM `user` WHERE `user_id`=?', [value], function (err, results) {
           if (err) {
             reject(new Error('internal server error'));
             connection.release();
             return;
           }
-          if (results.length === 0) reject(new Error('username is missing or invalid'));
+          if (results.length === 0) reject(new Error('user id is missing or invalid'));
           connection.release();
           resolve(results);
         });
@@ -120,38 +111,27 @@ router.delete('/follows', [auth,
           res.status(500).json({ msg: 'internal server error' });
           return;
         }
-        connection.query('SELECT `user_id` FROM `user` WHERE `username`=?', [req.body.username], function (err, userResults) {
+        connection.query('SELECT * FROM `follow` WHERE `user_id`=? AND `followed_user_id`=?', [req.authData.id, req.body.followedid], function (err, results) {
           if (err) {
             res.status(500).json({ msg: 'internal server error' });
             connection.release();
             return;
           }
-          if (userResults[0].user_id === req.authData.id) {
+          if (results.length === 0) {
             connection.release();
-            return res.status(422).json({ msg: 'missing or invalid info', });
+            res.status(422).json({ msg: 'missing or invalid info' });
+            return;
           }
-          connection.query('SELECT * FROM `follow` WHERE `user_id`=? AND `followed_user_id`=?', [req.authData.id, userResults[0].user_id], function (err, results) {
-            if (err) {
-              res.status(500).json({ msg: 'internal server error' });
-              connection.release();
-              return;
-            }
-            if (results.length === 0) {
-              connection.release();
-              res.status(422).json({ msg: 'missing or invalid info' });
-              return;
-            }
-            connection.query('DELETE FROM `follow` WHERE user_id=? AND followed_user_id=?',
-              [req.authData.id, userResults[0].user_id], function (err, results) {
-                if (err) {
-                  res.status(500).json({ msg: 'internal server error' });
-                  connection.release();
-                  return;
-                }
+          connection.query('DELETE FROM `follow` WHERE user_id=? AND followed_user_id=?',
+            [req.authData.id, req.body.followedid], function (err, results) {
+              if (err) {
+                res.status(500).json({ msg: 'internal server error' });
                 connection.release();
-                res.status(201).json({ msg: 'successful' })
-              });
-          })
+                return;
+              }
+              connection.release();
+              res.status(200).json({ msg: 'successful' })
+            });
         })
       })
     }

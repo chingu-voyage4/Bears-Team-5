@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+        
 import UserAuthentication from './UserAuthentication';
 
 const token = localStorage.getItem('token') || '';
-const username = localStorage.getItem('username');
+console.log(token);
 
 class PageHeader extends Component {
   logOut() {
