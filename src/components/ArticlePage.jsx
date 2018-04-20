@@ -8,10 +8,16 @@ import { startSetCurrentArticle } from '../actions/articles';
 
 class ArticlePage extends Component {
   state = {
-    liked: false
+    liked: false,
+    currentUser: localStorage.getItem('username')
   }
+
   componentDidMount() {
-    this.props.setCurrentArticle(this.props.match.params.slug);
+    this.props.setCurrentArticle(this.props.match.params.slug).then(() => {
+      if (this.props.currentArticle.liked) {
+        this.setState(() => ({ liked: true }))
+      }
+    });
   }
 
   render() {
@@ -30,7 +36,7 @@ class ArticlePage extends Component {
           name={this.props.article.username}
         />
         <div>
-          <button className="article__like">Like</button>
+          {this.props.article.username !== this.state.currentUser && <button>{this.state.liked ? 'unlike' : 'like'}</button>}
         </div>
         <h3>Suggested Articles</h3>
         <ul className="article__suggestions">
