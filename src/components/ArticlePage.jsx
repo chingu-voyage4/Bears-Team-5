@@ -1,83 +1,91 @@
-import React from 'react';
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import parser from 'html-react-parser';
+import marked from 'marked';
 import AuthorDetails from './AuthorDetails';
 import Comments from './Comments';
+import { startSetCurrentArticle, startLikeArticle, startUnlikeArticle } from '../actions/articles';
 
-export default class ArticlePage extends React.Component {
+class ArticlePage extends Component {
   state = {
-    article: {
-      title: this.props.article.title,
-      body: this.props.article.body,
-    },
-    comments: this.props.comments,
-  };
+    liked: false,
+    currentUser: localStorage.getItem('username')
+  }
+
+  componentDidMount() {
+    this.props.setCurrentArticle(this.props.match.params.slug).then(() => {
+      if (this.props.currentArticle.liked) {
+        this.setState(() => ({ liked: true }))
+      }
+    });
+  }
+
+  onClick = (e) => {
+    const article_id = this.props.article.article_id;
+    (
+      this.state.liked ? (
+        this.props.unlikeArticle(article_id)
+      ) : (
+          this.props.likeArticle(article_id)
+        ))
+      .then(() => {
+        this.setState((prevState) => ({
+          liked: !prevState.liked
+        }))
+      });
+  }
 
   render() {
     return (
       <div className="article container">
         <AuthorDetails
-          imgUrl="https://i.imgur.com/hyqmyzn.png"
-          name="Colonel Cockerel"
-          details="Leader of the Chicken Uprising, sworn enemy of KFC"
+          imgUrl={this.props.article.avatar}
+          name={this.props.article.username}
         />
-        <h2 className="article__title">{this.state.article.title}</h2>
-        <p>{this.state.article.body}</p>
-        <AuthorDetails
-          imgUrl="https://i.imgur.com/hyqmyzn.png"
-          name="Colonel Cockerel"
-          details="Leader of the Chicken Uprising, sworn enemy of KFC"
-        />
+        <h2 className="article__title">{this.props.article.title}</h2>
+        {
+          parser(marked(this.props.article.body))
+        }
         <div>
-          <button className="article__like">Like</button>
+          {this.props.article.username !== this.state.currentUser && <button onClick={this.onClick}>{this.state.liked ? 'unlike' : 'like'}</button>}
         </div>
         <h3>Suggested Articles</h3>
         <ul className="article__suggestions">
-          <li>
-            <a href="#">
-              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
-              <div>
-                <h3>Suggested Article</h3>
-                <AuthorDetails name="Name Goes Here" />
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
-              <div>
-                <h3>Suggested Article</h3>
-                <AuthorDetails name="Name Goes Here" />
-              </div>
-            </a>
-          </li><li>
-            <a href="#">
-              <img src="https://i.imgur.com/FMA5Y3v.jpg" />
-              <div>
-                <h3>Suggested Article</h3>
-                <AuthorDetails name="Name Goes Here" />
-              </div>
-            </a>
-          </li>
+          {this.props.suggestedArticles.map((article, index) => {
+            return index < 3 ? (
+              <li key={Math.floor(Math.random() * 99999)}>
+                <a href="#">
+                  <img src={article.image} />
+                  <div>
+                    <h3>{article.title}</h3>
+                    <AuthorDetails name={article.username} />
+                  </div>
+                </a>
+              </li>
+            ) : (
+                null
+              )
+          })}
         </ul>
-        <h3>Comments</h3>
-        <Comments comments={this.state.comments} />
       </div>
     );
   }
 }
 
-ArticlePage.defaultProps = {
-  article: {
-    title: 'Article Title',
-    body: 'Lorem ipsum dolor sit amet consectetur adipiscing elit magnis curae, orci in vehicula luctus ut ac faucibus vestibulum, habitasse erat eros egestas ad placerat libero laoreet. Lacus velit class feugiat aliquam sociis sodales donec ac dapibus, ridiculus neque montes quam per nam vitae varius est, nullam id pellentesque fermentum egestas convallis semper pretium. Metus justo suscipit per nulla aliquet facilisi duis congue class, ultricies maecenas taciti torquent mattis ante nullam vitae ornare, massa hac pretium fringilla purus mauris rutrum viverra. Quam porta lacinia porttitor aliquam morbi aliquet etiam, lectus curabitur per ultricies auctor nisi sollicitudin, ligula augue platea fermentum magna ridiculus. Tortor scelerisque nullam accumsan ornare suscipit tristique potenti nisi bibendum, nostra ut ultricies hendrerit auctor molestie metus inceptos ac id, posuere enim fermentum cras ligula sodales sed sociis.\n\nSodales ultrices ac phasellus justo natoque habitant habitasse et, laoreet metus sapien ullamcorper tortor sollicitudin faucibus auctor, sociis cubilia nulla blandit nec eu taciti. Pulvinar morbi commodo eget eleifend fusce primis habitasse ultrices quis felis dictumst porttitor habitant mattis aliquam a, nibh viverra varius conubia egestas tellus urna fames ornare torquent mi et id ut purus. Ut conubia at nisl sodales duis pellentesque orci nec felis, platea nulla viverra quis tempus dapibus sollicitudin enim eros pretium, iaculis convallis sociis dui libero magna cursus nunc. Urna aenean tempor accumsan nec donec arcu ligula et ut augue vulputate, risus laoreet at mollis tincidunt nulla nam mauris curabitur metus sodales, placerat proin eros pellentesque elementum quisque porttitor aptent senectus cum. Vel aliquam at rutrum rhoncus vestibulum eros imperdiet sodales sem, vivamus scelerisque quam nullam sollicitudin quisque ad himenaeos, a ante eleifend tellus taciti platea netus pharetra. Ullamcorper molestie dictum class mollis curae nunc vestibulum, pretium vivamus vehicula orci augue laoreet, arcu taciti etiam convallis primis cursus. Gravida egestas duis ornare urna est habitant posuere bibendum aliquet vehicula, sapien at tristique augue primis vulputate quam venenatis enim.',
-  },
-  comments: [
-    {
-      userName: 'Jethro',
-      commentBody: 'This is my comment',
-    },
-    {
-      userName: 'Lisa',
-      commentBody: 'React is amazing',
-    },
-  ],
-};
+const mapStateToProps = (state, props) => ({
+  suggestedArticles: state.articles.feed.filter(article => (
+    article.username !== localStorage.getItem("username")
+  )),
+  article: state.articles.feed.find(article => article.slug === props.match.params.slug),
+  currentArticle: state.articles.currentArticle
+});
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentArticle: slug => dispatch(startSetCurrentArticle(slug)),
+  likeArticle: article_id => dispatch(startLikeArticle(article_id)),
+  unlikeArticle: article_id => dispatch(startUnlikeArticle(article_id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);
+
