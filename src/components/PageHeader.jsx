@@ -7,7 +7,9 @@ const username = localStorage.getItem('username');
 
 const PageHeader = () => (
   <div className="header">
-    <h3 className="header__title">Medium Clone</h3>
+    <Link to="/">
+      <h3 className="header__title">Medium Clone</h3>
+    </Link>
     {token === '' ? (
       <UserAuthentication />
     ) : (

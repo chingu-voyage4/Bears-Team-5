@@ -9,7 +9,7 @@ class CreateArticle extends Component {
   state = {
     articleBody: '',
     articleTitle: '',
-    articleCategory: 'technology',
+    articleCategory: 'other',
     imgUrl: '',
     errors: {
       titleIsBlank: false,

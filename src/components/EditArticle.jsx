@@ -95,8 +95,8 @@ class EditArticle extends Component {
     return (
       <div>
         <AuthorDetails
-          name="Anonymous"
-          imgUrl="https://images.pexels.com/photos/38275/anonymous-studio-figure-photography-facial-mask-38275.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
+          name={localStorage.getItem('username')}
+          imgUrl={this.props.article.avatar}
         />
         <form onSubmit={this.onSubmit}>
           {this.state.errors.titleIsBlank && <p>Title cannot be left blank</p>}
