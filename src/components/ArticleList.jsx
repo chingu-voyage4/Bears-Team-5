@@ -4,9 +4,6 @@ import ArticleListItem from './ArticleListItem';
 
 const ArticleList = props => (
   <div
-    style={{
-      marginBottom: '30px'
-    }}
   >
     <h2>{props.type}</h2>
     {props.articles.length === 0
@@ -16,7 +13,7 @@ const ArticleList = props => (
           <ArticleListItem
             articleTitle={article.title}
             articleAuthor={props.username}
-            articleImg="https://static.pexels.com/photos/65834/pexels-photo-65834.jpeg"
+            articleImg={article.image}
             key={Math.floor(Math.random() * 99999)}
           />
         );
