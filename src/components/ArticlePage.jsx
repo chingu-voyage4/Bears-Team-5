@@ -4,24 +4,27 @@ import parser from 'html-react-parser';
 import marked from 'marked';
 import AuthorDetails from './AuthorDetails';
 import Comments from './Comments';
+import { startSetCurrentArticle } from '../actions/articles';
 
 class ArticlePage extends Component {
+  componentDidMount() {
+    this.props.setCurrentArticle(this.props.match.params.slug);
+  }
+
   render() {
     return (
       <div className="article container">
         <AuthorDetails
-          imgUrl="https://i.imgur.com/hyqmyzn.png"
-          name="Colonel Cockerel"
-          details="Leader of the Chicken Uprising, sworn enemy of KFC"
+          imgUrl={this.props.article.avatar}
+          name={this.props.article.username}
         />
-        <h2 className="article__title">{props.article.title}</h2>
+        <h2 className="article__title">{this.props.article.title}</h2>
         {
-          parser(marked(props.article.body))
+          parser(marked(this.props.article.body))
         }
         <AuthorDetails
-          imgUrl="https://i.imgur.com/hyqmyzn.png"
-          name="Colonel Cockerel"
-          details="Leader of the Chicken Uprising, sworn enemy of KFC"
+          imgUrl={this.props.article.avatar}
+          name={this.props.article.username}
         />
         <div>
           <button className="article__like">Like</button>
@@ -45,7 +48,8 @@ class ArticlePage extends Component {
                 <AuthorDetails name="Name Goes Here" />
               </div>
             </a>
-          </li><li>
+          </li>
+          <li>
             <a href="#">
               <img src="https://i.imgur.com/FMA5Y3v.jpg" />
               <div>
@@ -53,17 +57,19 @@ class ArticlePage extends Component {
                 <AuthorDetails name="Name Goes Here" />
               </div>
             </a>
-               </li>
+          </li>
         </ul>
-        <h3>Comments</h3>
-        <Comments comments={props.comments} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, props) => ({
-  article: state.articles.feed.find(article => article.slug === props.match.params.slug),
+  article: state.articles.feed.find(article => article.slug === props.match.params.slug)
 });
 
-export default connect(mapStateToProps)(ArticlePage);
+const mapDispatchToProps = dispatch => ({
+  setCurrentArticle: slug => dispatch(startSetCurrentArticle(slug))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);
