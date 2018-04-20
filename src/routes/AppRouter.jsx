@@ -5,6 +5,7 @@ import Homepage from '../components/HomePage';
 import CreateArticle from '../components/CreateArticle';
 import PageHeader from '../components/PageHeader';
 import ArticlePage from '../components/ArticlePage';
+import ProfilePage from '../components/ProfilePage';
 
 const AppRouter = () => {
   return (
@@ -12,6 +13,7 @@ const AppRouter = () => {
           <div>
               <PageHeader />
               <Route exact path="/" component={Homepage} />
+              <PrivateRoute path="/profile/:username" component={ProfilePage} />
               <Route exact path="/articles/view/:slug" component={ArticlePage} />
               <PrivateRoute path="/articles/create" component={CreateArticle} />
             </div>
