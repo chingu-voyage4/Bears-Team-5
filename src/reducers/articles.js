@@ -20,6 +20,8 @@ export default (state = articlesReducerDefaultState, action) => {
       return { ...state, category: action.category };
     case 'SET_CURRENT_ARTICLE':
       return { ...state, currentArticle: action.currentArticle };
+    case 'LIKE_CURRENT_ARTICLE':
+      return state;
     default:
       return state;
   }

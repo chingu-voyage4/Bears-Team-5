@@ -123,3 +123,30 @@ export const startSetCurrentArticle = (slug) => {
       });
   };
 };
+
+export const likeArticle = () => ({
+  type: 'LIKE_ARTICLE'
+});
+
+export const startLikeArticle = (article_id) => {
+  return (dispatch) => {
+    const url = `${process.env.DB_URL}${'api/likes/'}`;
+    const config = {
+      url,
+      method: 'post',
+      data: JSON.stringify({ article_id }),
+      headers: {
+        Authorization: localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+
+      }
+    };
+    return axios(config)
+      .then((response) => {
+        return dispatch(likeArticle());
+      }).catch((error) => {
+        console.log('An error occured while trying to like this article. Please try again.');
+        console.log(error.response);
+      });
+  };
+};
