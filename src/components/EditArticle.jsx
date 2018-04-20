@@ -5,7 +5,7 @@ import slugify from 'slugify';
 import AuthorDetails from './AuthorDetails';
 import { startEditArticle } from '../actions/articles';
 
-class CreateArticle extends Component {
+class EditArticle extends Component {
   state = {
     articleBody: this.props.article.body,
     articleTitle: this.props.article.title,
@@ -61,21 +61,20 @@ class CreateArticle extends Component {
     const newtitle = this.state.articleTitle;
     const newcategory = this.state.articleCategory;
     const newimage = this.state.imgUrl;
-    if (!(body === "" || title === "")) {
+    if (!(newbody === "" || newtitle === "")) {
       const updates = {
         newbody,
         newtitle,
         newcategory,
         newimage
       }
-      this.props.editArticle(this.props.article.article);
+      this.props.editArticle(this.props.article.article_id, updates);
       this.setState(() => ({
         errors: {
           bodyIsBlank: false,
           titleIsBlank: false
         }
       }));
-      this.props.history.push("/");
     } else {
       this.setState(() => ({
         errors: {
@@ -160,7 +159,7 @@ class CreateArticle extends Component {
             value={this.state.imgUrl}
           />
           {this.props.publishingError && <p>{this.props.publishingError}</p>}
-          <button type="submit">Publish Article</button>
+          <button type="submit">Edit Article</button>
         </form>
       </div>
     );
@@ -169,11 +168,11 @@ class CreateArticle extends Component {
 
 const mapStateToProps = (state, props) => ({
   publishingError: state.articles.error,
-  article: state.articles.feed.find(article => article.id === props.match.params.id)
+  article: state.articles.feed.find(article => article.article_id === parseInt(props.match.params.id))
 });
 
 const mapDispatchToProps = (dispatch) => ({
   editArticle: (id, updates) => dispatch(startEditArticle(id, updates))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);
+export default connect(mapStateToProps, mapDispatchToProps)(EditArticle);
