@@ -150,3 +150,30 @@ export const startLikeArticle = (article_id) => {
       });
   };
 };
+
+export const unlikeArticle = () => ({
+  type: 'UNLIKE_CURRENT_ARTICLE'
+});
+
+export const startUnlikeArticle = (article_id) => {
+  return (dispatch) => {
+    const url = `${process.env.DB_URL}${'api/likes/'}`;
+    const config = {
+      url,
+      method: 'delete',
+      data: JSON.stringify({ article_id }),
+      headers: {
+        Authorization: localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+
+      }
+    };
+    return axios(config)
+      .then((response) => {
+        return dispatch(unlikeArticle());
+      }).catch((error) => {
+        console.log('An error occured while trying to unlike this article. Please try again.');
+        console.log(error.response);
+      });
+  };
+};

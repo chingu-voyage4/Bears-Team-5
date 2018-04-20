@@ -22,6 +22,8 @@ export default (state = articlesReducerDefaultState, action) => {
       return { ...state, currentArticle: action.currentArticle };
     case 'LIKE_CURRENT_ARTICLE':
       return state;
+    case 'UNLIKE_CURRENT_ARTICLE':
+      return state;
     default:
       return state;
   }
