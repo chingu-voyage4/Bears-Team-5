@@ -72,7 +72,7 @@ ArticlePage.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-  article: state.articles.feed.find(article => article.slug === props.match.params.slug)
+  article: state.articles.feed.find(article => article.slug === props.match.params.slug),
 });
 
 export default connect(mapStateToProps)(ArticlePage);
