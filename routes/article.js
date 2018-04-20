@@ -17,24 +17,34 @@ router.get('/articles/:slug', [function (req, res, next) {
       res.status(500).json({ msg: 'internal server error' });
       return;
     }
-    connection.query('SELECT `article_id`, `title`, `body`, `category`, `date`, `likes`, `image` FROM `article` WHERE `slug` = ?',
-      [req.params.slug], function (err, results) {
+    connection.query('SELECT * FROM `article` WHERE `slug` = ?', [req.params.slug], function (err, results) {
+      if (err) {
+        res.status(500).json({ msg: 'internal server error' });
+        connection.release();
+        return;
+      }
+      if (results.length === 0) {
+        connection.release();
+        res.status(404).json({ msg: 'article not found' });
+        return;
+      }
+      results[0].date = moment.parseZone(results[0].date).format('YYYY-MM-DD');
+
+      connection.query('SELECT `username`,`avatar` FROM `user` WHERE `user_id` = ?', [results[0].user_id], function (err, userResults) {
         if (err) {
           res.status(500).json({ msg: 'internal server error' });
           connection.release();
           return;
         }
-        if (results.length === 0) {
-          connection.release();
-          res.status(404).json({ msg: 'article not found' });
-          return;
-        }
         connection.release();
-        results[0].date = moment.parseZone(results[0].date).format('YYYY-MM-DD');
+        results[0].username = userResults[0].username;
+        results[0].avatar = userResults[0].avatar;
+        delete results[0].user_id;
         req.results = results[0];
         next();
       });
-  });
+    });
+  })
 }, optionalAuth, function (req, res) {
   if (req.authData) {
     db.getConnection(function (err, connection) {
@@ -48,15 +58,26 @@ router.get('/articles/:slug', [function (req, res, next) {
           connection.release();
           return;
         }
-        connection.release();
         if (results[0].user_id === req.authData.id) {
           req.results.personal = true;
+        } else { req.results.personal = false; }
+
+        connection.query('SELECT * FROM `like` WHERE `article_id`=? AND `user_id`=?', [req.results.article_id, req.authData.id], function (err, likeResults) {
+          if (err) {
+            res.status(500).json({ msg: 'internal server error' });
+            connection.release();
+            return;
+          }
+          connection.release();
+          if (likeResults.length > 0) { req.results.liked = true; }
+          else { req.results.liked = false; }
           return res.status(200).json({ article: req.results });
-        }
+        });
       });
     });
   } else {
     req.results.personal = false;
+    req.results.liked = false;
     return res.status(200).json({ article: req.results });
   }
 }])
@@ -96,7 +117,6 @@ router.post('/articles', [auth,
 
         connection.query(query, values, function (err, results) {
           if (err) {
-            console.log(err);
             res.status(500).json({ msg: 'internal server error' });
             connection.release();
             return;

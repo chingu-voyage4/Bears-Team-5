@@ -3,17 +3,23 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import slugify from 'slugify';
 import AuthorDetails from './AuthorDetails';
-import { startCreateArticle } from '../actions/articles';
+import { startEditArticle } from '../actions/articles';
 
-class CreateArticle extends Component {
+class EditArticle extends Component {
   state = {
-    articleBody: '',
-    articleTitle: '',
-    articleCategory: 'technology',
-    imgUrl: '',
+    articleBody: this.props.article.body,
+    articleTitle: this.props.article.title,
+    articleCategory: this.props.article.category,
+    imgUrl: this.props.article.image,
     errors: {
       titleIsBlank: false,
       bodyIsBlank: false,
+    },
+    isUpdated: {
+      body: false,
+      title: false,
+      category: false,
+      image: false,
     }
   };
 
@@ -57,32 +63,29 @@ class CreateArticle extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const body = this.state.articleBody;
-    const title = this.state.articleTitle;
-    const category = this.state.articleCategory;
-    const image = this.state.imgUrl;
-    const date = moment().format("YYYY-MM-DD");
-    if (!(body === "" || title === "")) {
-      const article = {
-        body,
-        title,
-        category,
-        date,
-        image
+    const newbody = this.state.articleBody;
+    const newtitle = this.state.articleTitle;
+    const newcategory = this.state.articleCategory;
+    const newimage = this.state.imgUrl;
+    if (!(newbody === "" || newtitle === "")) {
+      const updates = {
+        newbody,
+        newtitle,
+        newcategory,
+        newimage
       }
-      this.props.createArticle(article);
+      this.props.editArticle(this.props.article.article_id, updates);
       this.setState(() => ({
         errors: {
           bodyIsBlank: false,
           titleIsBlank: false
         }
       }));
-      this.props.history.push("/");
     } else {
       this.setState(() => ({
         errors: {
-          bodyIsBlank: body === "",
-          titleIsBlank: title === ""
+          bodyIsBlank: newbody === "",
+          titleIsBlank: newtitle === ""
         }
       }))
     }
@@ -162,19 +165,20 @@ class CreateArticle extends Component {
             value={this.state.imgUrl}
           />
           {this.props.publishingError && <p>{this.props.publishingError}</p>}
-          <button type="submit">Publish Article</button>
+          <button type="submit">Edit Article</button>
         </form>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  publishingError: state.articles.error
+const mapStateToProps = (state, props) => ({
+  publishingError: state.articles.error,
+  article: state.articles.feed.find(article => article.article_id === parseInt(props.match.params.id))
 });
 
-const mapDispatchToProps = dispatch => ({
-  createArticle: article => dispatch(startCreateArticle(article))
+const mapDispatchToProps = (dispatch) => ({
+  editArticle: (id, updates) => dispatch(startEditArticle(id, updates))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);
+export default connect(mapStateToProps, mapDispatchToProps)(EditArticle);

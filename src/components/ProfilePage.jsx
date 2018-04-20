@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ArticleList from './ArticleList';
 
 const ProfilePage = props => (
   <div>
     <h2>
-      <strong>{props.username}</strong>
+      <strong>{props.match.params.username}</strong>
     </h2>
-    <p>{props.numFollowing} following</p>
-    <p>{props.numFollowers} followers</p>
-    <img src={props.userImgURL} height="30px" width="30px" />
-    <ArticleList type="Liked Articles" articles={props.likedArticles} />
-    <ArticleList type="Published Articles" articles={props.publishedArticles} />
+    <Link to="/articles/create" >Publish New Article</Link>
+    <ArticleList type="Published Articles" articles={props.publishedArticles} username={props.match.params.username} />
     <div>
       Icons made by{' '}
       <a href="http://www.freepik.com" title="Freepik">
@@ -34,18 +33,11 @@ const ProfilePage = props => (
 );
 
 ProfilePage.propTypes = {
-  username: PropTypes.string.isRequired,
-  numFollowing: PropTypes.number.isRequired,
-  numFollowers: PropTypes.number.isRequired,
-  likedArticles: PropTypes.array,
   publishedArticles: PropTypes.array,
-  userImgURL: PropTypes.string
 };
 
-ProfilePage.defaultProps = {
-  userImgURL: 'https://i.imgur.com/mECBxga.png',
-  likedArticles: [],
-  publishedArticles: []
-};
+const mapStateToProps = (state, props) => ({
+  publishedArticles: state.articles.feed.filter(article => article.username === props.match.params.username)
+});
 
-export default ProfilePage;
+export default connect(mapStateToProps)(ProfilePage);

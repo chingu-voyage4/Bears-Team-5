@@ -42,7 +42,7 @@ class UserAuthentication extends Component {
           {this.state.modalContent === 'Sign Up' ? (
             <SignUpForm />
           ) : (
-              <LogInForm onSubmit={this.onSubmit} errors={this.props.errors} />
+              <LogInForm onSubmit={this.onSubmit} error={this.props.error} />
             )}
         </Modal>
       </div>
@@ -51,7 +51,7 @@ class UserAuthentication extends Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.errors
+  error: state.errors.loginError
 });
 
 const mapDispatchToProps = dispatch => ({

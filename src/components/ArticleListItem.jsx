@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import AuthorDetails from './AuthorDetails';
 
 const ArticleListItem = props => (
-  <div
-    style={{
-      border: '1px solid black'
-    }}
-  >
-    <AuthorDetails name={props.articleAuthor} />
-    <img src={props.articleImg} height="250px" width="600px" />
+  <div >
     <h3>{props.articleTitle}</h3>
+    <img src={props.articleImg} height="250px" width="600px" />
   </div>
 );
 
