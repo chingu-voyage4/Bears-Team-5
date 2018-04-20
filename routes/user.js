@@ -91,7 +91,6 @@ router.post(
           }
           connection.query('INSERT INTO `user` (username, password, email) VALUES (?, ?, ?)', [req.body.username, hash, req.body.email], function (error, results) {
             if (error) {
-              console.log(error);
               res.status(500).json({ msg: 'internal server error' });
               connection.release();
               return;
