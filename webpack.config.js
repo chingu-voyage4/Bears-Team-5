@@ -1,6 +1,7 @@
 // entry point -> output file
 
-const path = require("path");
+const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: "./src/app.js",
@@ -21,7 +22,17 @@ module.exports = {
       }
     ]
   },
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, "public")
-  }
+    contentBase: path.join(__dirname, 'public'),
+    historyApiFallback: true,
+
+  },
+  resolve: {
+    modules: ['node_modules'],
+    extensions: ['.js', '.json', '.jsx'],
+  },
+  plugins: [
+    new Dotenv()
+  ]
 };

@@ -1,0 +1,20 @@
+.details{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.details__image{
+  border-radius: 50%;
+  height: 100%;
+  margin-right: 10px; 
+}
+
+.details__text{
+  font-family: $sans-pro;
+  font-size: $font-size-small;
+  margin: 0;
+  &:nth-child(2){
+    color: $grey;
+  }
+}
