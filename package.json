@@ -4,7 +4,7 @@
   "description": "a basic medium.com clone",
   "main": "server.js",
   "scripts": {
-    "test": "",
+    "test": "mocha tests --timeout 10000",
     "dev-server": "webpack-dev-server --mode development"
   },
   "repository": {
