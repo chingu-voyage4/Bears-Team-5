@@ -6,11 +6,8 @@ import ArticleList from './ArticleList';
 const ProfilePage = props => (
   <div>
     <h2>
-      <strong>{props.username}</strong>
+      <strong>{props.match.params.username}</strong>
     </h2>
-    <p>{props.numFollowing} following</p>
-    <p>{props.numFollowers} followers</p>
-    <img src={props.userImgURL} height="30px" width="30px" />
     <ArticleList type="Published Articles" articles={props.publishedArticles} username={props.match.params.username} />
     <div>
       Icons made by{' '}
@@ -35,11 +32,6 @@ const ProfilePage = props => (
 
 ProfilePage.propTypes = {
   publishedArticles: PropTypes.array,
-  userImgURL: PropTypes.string
-};
-
-ProfilePage.defaultProps = {
-  userImgURL: 'https://i.imgur.com/mECBxga.png',
 };
 
 const mapStateToProps = (state, props) => ({
