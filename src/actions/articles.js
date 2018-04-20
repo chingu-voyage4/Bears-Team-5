@@ -116,7 +116,7 @@ export const startSetCurrentArticle = (slug) => {
     };
     return axios(config)
       .then((response) => {
-        dispatch(setCurrentArticle(response.data.article));
+        return dispatch(setCurrentArticle(response.data.article));
       }).catch((error) => {
         const errorMsg = 'An error occured while trying to publish your article. Please try again.';
         dispatch(setError(errorMsg));
