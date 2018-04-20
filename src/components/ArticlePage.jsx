@@ -4,7 +4,7 @@ import parser from 'html-react-parser';
 import marked from 'marked';
 import AuthorDetails from './AuthorDetails';
 import Comments from './Comments';
-import { startSetCurrentArticle, startLikeArticle } from '../actions/articles';
+import { startSetCurrentArticle, startLikeArticle, startUnlikeArticle } from '../actions/articles';
 
 class ArticlePage extends Component {
   state = {
@@ -22,9 +22,17 @@ class ArticlePage extends Component {
 
   onClick = (e) => {
     const article_id = this.props.article.article_id;
-    this.props.likeArticle(article_id).then(() => (
-      this.props.setCurrentArticle(this.props.match.params.slug)
-    ));
+    (
+      this.state.liked ? (
+        this.props.unlikeArticle(article_id)
+      ) : (
+          this.props.likeArticle(article_id)
+        ))
+      .then(() => {
+        this.setState((prevState) => ({
+          liked: !prevState.liked
+        }))
+      });
   }
 
   render() {
@@ -83,7 +91,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
   setCurrentArticle: slug => dispatch(startSetCurrentArticle(slug)),
-  likeArticle: article_id => dispatch(startLikeArticle(article_id))
+  likeArticle: article_id => dispatch(startLikeArticle(article_id)),
+  unlikeArticle: article_id => dispatch(startUnlikeArticle(article_id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);
