@@ -7,8 +7,11 @@ import { setCategory, startSetArticles } from '../actions/articles';
 class HomePage extends Component {
   onClick = e => {
     const category = e.target.innerHTML;
-    this.props.setCategory(category);
-    this.props.setArticles();
+    if (category === 'home') {
+      this.props.setArticles();
+    } else {
+      this.props.setArticles(category);
+    }
   }
 
   render() {
@@ -49,6 +52,7 @@ HomePage.propTypes = {
 HomePage.defaultProps = {
   lastestArticles: [],
   categories: [
+    'home',
     'technology',
     'culture',
     'entrepreneurship',
@@ -64,12 +68,12 @@ HomePage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  latestArticles: state.articles.feed
+  latestArticles: state.articles.feed,
 });
 
 const mapDispatchToProps = dispatch => ({
   setCategory: category => dispatch(setCategory(category)),
-  setArticles: () => dispatch(startSetArticles())
+  setArticles: (category) => dispatch(startSetArticles(category))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
