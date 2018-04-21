@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { setMessage } from '../actions/messages';
-import UserAuthentication from './UserAuthentication';
 import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import { startLogIn } from '../actions/auth';
