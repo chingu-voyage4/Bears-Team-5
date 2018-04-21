@@ -75,9 +75,9 @@ class PageHeader extends Component {
             >
               <a onClick={this.closeModal}>&times;</a>
               {this.state.modalContent === 'Sign Up' ? (
-                <SignUpForm onSubmit={this.onLogIn} />
+                <SignUpForm onSubmit={this.onSignUp} errors={this.props.signUpErrors} />
               ) : (
-                  <LogInForm onSubmit={this.onLogIn} />
+                  <LogInForm onSubmit={this.onLogIn} error={this.props.loginError} />
                 )}
             </Modal>
           </div>
@@ -95,7 +95,8 @@ class PageHeader extends Component {
 
 const mapStateToProps = state => ({
   message: state.messages.message,
-  error: state.errors.loginError
+  loginError: state.errors.loginError,
+  signUpErrors: state.errors.signUpErrors
 });
 
 const mapDispatchToProps = dispatch => ({
