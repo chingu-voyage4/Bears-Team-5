@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ArticleList from './ArticleList';
 
-const ProfilePage = props => (
-  <div>
-    <h2>
-      <strong>{props.match.params.username}</strong>
-    </h2>
-    <button>
-      Publish New Article
-    </button>
-    <ArticleList type="Published Articles" articles={props.publishedArticles} username={props.match.params.username} />
-  </div>
-);
+class ProfilePage extends Component {
+  onClick = e => {
+    this.props.history.push("/articles/create");
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>
+          <strong>{this.props.match.params.username}</strong>
+        </h2>
+        <button onClick={this.onClick}>
+          Publish New Article
+        </button>
+        <ArticleList type="Published Articles" articles={this.props.publishedArticles} username={this.props.match.params.username} />
+      </div>
+    );
+  }
+}
 
 ProfilePage.propTypes = {
   publishedArticles: PropTypes.array,
