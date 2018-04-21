@@ -8,7 +8,7 @@
     "test": "mocha tests --timeout 10000",
     "dev-server": "webpack-dev-server --mode development",
     "start": "node server/server.js",
-    "heroku-postbuild": "yarn run build"
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
