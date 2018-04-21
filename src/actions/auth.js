@@ -2,11 +2,6 @@ import axios from 'axios';
 import { setLoginErrors, clearError, setSignUpErrors } from './errors';
 import { setMessage } from './messages';
 
-export const logIn = username => ({
-  type: 'LOG_IN',
-  username
-});
-
 export const startLogIn = (userCredentials) => {
   return (dispatch) => {
     const url = `${process.env.DB_URL}${'api/login'}`;
