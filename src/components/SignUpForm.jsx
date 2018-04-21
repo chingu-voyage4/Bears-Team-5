@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Modal from 'react-modal';
 
 export default class SignUpForm extends Component {
   state = {
@@ -8,12 +7,7 @@ export default class SignUpForm extends Component {
     email: '',
     password: '',
     confirmPassword: '',
-    modalIsOpen: false,
     errors: []
-  };
-
-  closeModal = () => {
-    this.setState(() => ({ modalIsOpen: false }));
   };
 
   onUsernameChange = e => {
@@ -104,14 +98,6 @@ export default class SignUpForm extends Component {
           <br />
           <button type="submit">Submit</button>
         </form>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          contentLabel="Registration successful"
-          onRequestClose={() => this.setState(() => ({ modalIsOpen: false }))}
-        >
-          <a onClick={this.closeModal}>&times;</a>
-          <p>You have successfully registered!</p>
-        </Modal>
       </div>
     );
   }
