@@ -24,7 +24,7 @@ export const startLogIn = (userCredentials) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', userCredentials.username);
         setMessage('Log In Successful');
-        dispatch(logIn(userCredentials.username));
+        return dispatch(logIn(userCredentials.username));
       })
       .catch((error) => {
         const errorMsg = error.response.data.msg;
