@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import parser from 'html-react-parser';
 import marked from 'marked';
 import AuthorDetails from './AuthorDetails';
-import Comments from './Comments';
 import { startSetCurrentArticle, startLikeArticle, startUnlikeArticle } from '../actions/articles';
 
 class ArticlePage extends Component {
