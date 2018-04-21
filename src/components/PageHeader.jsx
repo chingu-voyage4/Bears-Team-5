@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { setMessage } from '../actions/messages';
 import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
-import { startLogIn } from '../actions/auth';
+import { startLogIn, startSignUp } from '../actions/auth';
 
 
 class PageHeader extends Component {
@@ -35,13 +35,20 @@ class PageHeader extends Component {
     this.setState(() => ({ modalIsOpen: false }));
   };
 
-  onSubmit = userCredentials => {
+  onLogIn = userCredentials => {
     this.props.startLogIn(userCredentials)
       .then(() => {
         this.setState(() => ({
           token: localStorage.getItem('token'),
           username: localStorage.getItem('username')
         }))
+        this.closeModal();
+      });
+  };
+
+  onSignUp = userCredentials => {
+    this.props.startSignUp(userCredentials)
+      .then(() => {
         this.closeModal();
       });
   };
@@ -68,9 +75,9 @@ class PageHeader extends Component {
             >
               <a onClick={this.closeModal}>&times;</a>
               {this.state.modalContent === 'Sign Up' ? (
-                <SignUpForm />
+                <SignUpForm onSubmit={this.onLogIn} />
               ) : (
-                  <LogInForm onSubmit={this.onSubmit} error={this.props.error} />
+                  <LogInForm onSubmit={this.onLogIn} />
                 )}
             </Modal>
           </div>
@@ -93,7 +100,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setMessage: (message) => dispatch(setMessage(message)),
-  startLogIn: userCredentials => dispatch(startLogIn(userCredentials))
+  startLogIn: userCredentials => dispatch(startLogIn(userCredentials)),
+  startSignUp: userCredentials => dispatch(startSignUp(userCredentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHeader);
