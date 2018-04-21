@@ -1,0 +1,18 @@
+.article-form{
+  margin: $large-size auto;
+  * {
+    margin-left: $large-size;
+    margin-bottom: $extra-large-size; 
+  }
+}
+
+.article-form__select{
+  border: none;
+  font-size: $font-size-medium;
+  height: 30px;
+  width: 25%;
+}
+
+.article-form__body{
+  resize: none;
+}
