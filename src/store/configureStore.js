@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
-import authReducer from '../reducers/auth';
+import messagesReducer from '../reducers/messages';
 import articlesReducer from '../reducers/articles';
 import errorsReducer from '../reducers/errors';
 
@@ -10,9 +10,10 @@ export default () => {
   const store = createStore(
     combineReducers({
       articles: articlesReducer,
-      auth: authReducer,
+      messages: authReducer,
       errors: errorsReducer
     }),
-    composeEnhancers(applyMiddleware(thunk)));
+    composeEnhancers(applyMiddleware(thunk))
+);
   return store;
 };
