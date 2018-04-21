@@ -24,9 +24,9 @@ export const startCreateArticle = (article) => {
       }
     };
     return axios(config)
-      .then(response => (
-        dispatch(createArticle(article))
-      )).catch((error) => {
+      .then((response) => {
+        return dispatch(createArticle(article));
+      }).catch((error) => {
         const errorMsg = 'An error occured while trying to publish your article. Please try again.';
         dispatch(setError(errorMsg));
       });
@@ -119,7 +119,7 @@ export const startEditArticle = (id, updates) => {
     };
     return axios(config)
       .then((response) => {
-        dispatch(editArticle(id, updates));
+        return dispatch(editArticle(id, updates));
       }).catch((error) => {
         const errorMsg = 'An error occured while trying to publish your article. Please try again.';
         dispatch(setError(errorMsg));

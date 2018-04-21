@@ -23,7 +23,7 @@ class ProfilePage extends Component {
           ) : (
               this.props.publishedArticles.map(article => (
                 <div key={Math.floor(Math.random() * 9999)} className="article-list__article">
-                  <Link to={`/articles/view/${article.slug}`}>
+                  <Link to={`/articles/edit/${article.article_id}`}>
                     <h3 className="article-list__article-title">{article.title}</h3>
                     <img src={article.image} alt="article thumbnail" className="article-list__article-image" />
                   </Link>
