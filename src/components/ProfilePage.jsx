@@ -11,14 +11,27 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <div>
-        <h2>
+      <div className="profile">
+        <h2 className="profile__title">
           <strong>{this.props.match.params.username}</strong>
         </h2>
-        <button onClick={this.onClick}>
+        <button onClick={this.onClick} className="button">
           Publish New Article
         </button>
-        <ArticleList type="Published Articles" articles={this.props.publishedArticles} username={this.props.match.params.username} />
+        <div className="article-list">
+          {this.props.publishedArticles.length === 0 ? (
+            <p>No articles to display</p>
+          ) : (
+              this.props.publishedArticles.map(article => (
+                <div key={Math.floor(Math.random() * 9999)} className="article-list__article">
+                  <Link to={`/articles/view/${article.slug}`}>
+                    <h3 className="article-list__article-title">{article.title}</h3>
+                    <img src={article.image} alt="article thumbnail" className="article-list__article-image" />
+                  </Link>
+                </div>
+              ))
+            )}
+        </div>
       </div>
     );
   }
