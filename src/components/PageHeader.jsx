@@ -10,8 +10,8 @@ import { startLogIn, startSignUp } from '../actions/auth';
 
 class PageHeader extends Component {
   state = {
-    token: '',
-    username: '',
+    token: localStorage.getItem('token') || '',
+    username: localStorage.getItem('username') || '',
     modalContent: 'Sign Up',
     modalIsOpen: false
   };
@@ -56,7 +56,7 @@ class PageHeader extends Component {
   render() {
     return (
       <div className="header">
-        {this.props.message && <p>{this.props.message}</p>}
+        {/* {this.props.message && <p className="header__message">{this.props.message}</p>} */}
         <Link to="/">
           <h3 className="header__title">Medium Clone</h3>
         </Link>
@@ -82,11 +82,12 @@ class PageHeader extends Component {
             </Modal>
           </div>
         ) : (
-            <Link to={`/profile/${this.state.username}`} >
-              Welcome, {this.state.username}!
-              <br />
-              <button onClick={this.onClick}>Log Out</button>
-            </Link>
+            <div>
+              <Link to={`/profile/${this.state.username}`} >
+                <span className="header__profile-link">Welcome, {this.state.username}!</span>
+              </Link>
+              <a onClick={this.onClick} >Log Out</a>
+            </div>
           )}
       </div>
     );
