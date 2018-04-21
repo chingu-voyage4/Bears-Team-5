@@ -1,6 +1,8 @@
-const path = require('path');
-const Dotenv = require('dotenv-webpack');
+// entry point -> output file
 
+const path = require('path');
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/app.jsx',
@@ -21,17 +23,23 @@ module.exports = {
       },
     ],
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    historyApiFallback: true,
-
-  },
+  devtool: 'source-map',
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx'],
   },
   plugins: [
-    new Dotenv()
+    new Dotenv(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ]
 };
