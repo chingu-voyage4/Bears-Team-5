@@ -42,12 +42,13 @@ export const startSetArticles = (category) => {
   return (dispatch, getState) => {
     const params = (category ? `?category=${category}` : '');
     const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
+    const headers = (localStorage.getItem('token') ? {
+        Authorization: localStorage.getItem('token')
+      } : {});
     const config = {
       url,
       method: 'get',
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
+      headers
     };
     return axios(config)
       .then((response) => {
@@ -69,13 +70,14 @@ export const startSetArticlesByFollowedAuthors = () => {
   return (dispatch, getState) => {
     const params = `?followed=${true}`;
     const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
+    const headers = (localStorage.getItem('token') ? {
+        Authorization: localStorage.getItem('token')
+      } : {});
     console.log(url);
     const config = {
       url,
       method: 'get',
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
+      headers
     };
     return axios(config)
       .then((response) => {
