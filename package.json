@@ -6,7 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "test": "mocha tests --timeout 10000",
-    "dev-server": "webpack-dev-server --mode development"
+    "dev-server": "webpack-dev-server --mode development",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
