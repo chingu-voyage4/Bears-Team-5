@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setLoginErrors, clearError } from './errors';
+import { setMessage } from './messages';
 
 export const logIn = username => ({
   type: 'LOG_IN',
@@ -22,6 +23,7 @@ export const startLogIn = (userCredentials) => {
         dispatch(clearError('loginError'));
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', userCredentials.username);
+        setMessage('Log In Successful');
         dispatch(logIn(userCredentials.username));
       })
       .catch((error) => {
