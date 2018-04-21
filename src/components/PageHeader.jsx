@@ -62,10 +62,10 @@ class PageHeader extends Component {
         </Link>
         {this.state.token === '' ? (
           <div className="authentication">
-            <button onClick={this.triggerModal} name="Sign Up" className="authentication__button">
+            <button onClick={this.triggerModal} name="Sign Up" className="button">
               Sign Up
             </button>
-            <button onClick={this.triggerModal} name="Log In" className="authentication__button">
+            <button onClick={this.triggerModal} name="Log In" className="button">
               Log In
             </button>
             <Modal
