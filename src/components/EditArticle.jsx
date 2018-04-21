@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import slugify from 'slugify';
+import Textarea from "react-textarea-autosize";
 import AuthorDetails from './AuthorDetails';
 import { startEditArticle } from '../actions/articles';
 
@@ -74,13 +74,17 @@ class EditArticle extends Component {
         newcategory,
         newimage
       }
-      this.props.editArticle(this.props.article.article_id, updates);
-      this.setState(() => ({
-        errors: {
-          bodyIsBlank: false,
-          titleIsBlank: false
-        }
-      }));
+      this.props.editArticle(this.props.article.article_id, updates)
+        .then(() => {
+          this.setState(() => ({
+            errors: {
+              bodyIsBlank: false,
+              titleIsBlank: false
+            }
+          }));
+          this.props.history.push("/");
+        })
+
     } else {
       this.setState(() => ({
         errors: {
@@ -93,32 +97,18 @@ class EditArticle extends Component {
 
   render() {
     return (
-      <div>
-        <AuthorDetails
-          name="Anonymous"
-          imgUrl="https://images.pexels.com/photos/38275/anonymous-studio-figure-photography-facial-mask-38275.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
-        />
+      <div className="container article-form">
         <form onSubmit={this.onSubmit}>
           {this.state.errors.titleIsBlank && <p>Title cannot be left blank</p>}
           <input
             type="text"
             name="title"
             onChange={this.onTitleChange}
-            placeholder="Title"
-            style={{
-              border: 'none',
-              display: 'block',
-              fontSize: '30px',
-              fontWeight: 'bold',
-              height: '50px',
-              margin: '15px auto',
-              padding: '0 10px',
-              width: '60%',
-            }}
+            placeholder="Article Title"
             value={this.state.articleTitle}
+            className="article-form__title"
           />
-          <br />
-          <select onChange={this.onCategoryChange}>
+          <select onChange={this.onCategoryChange} className="article-form__select">
             <option value="technology" >technology</option>
             <option value="culture" >culture</option>
             <option value="entrepreneurship" >entrepreneurship</option>
@@ -131,41 +121,25 @@ class EditArticle extends Component {
             <option value="popular" >popular</option>
             <option value="other" >other</option>
           </select>
-          <br />
           {this.state.errors.bodyIsBlank && <p>Body cannot be left blank</p>}
-          <textarea
+          <Textarea
             name="body"
             onChange={this.onBodyChange}
             placeholder="Tell us your story ..."
-            style={{
-              border: 'none',
-              display: 'block',
-              fontSize: '30px',
-              height: '50px',
-              margin: '0 auto 30px auto',
-              padding: '0 10px',
-              width: '60%',
-            }}
+            className="article-form__body"
             value={this.state.articleBody}
           />
+          {this.state.errors.imageIsBlank && <p>Article cannot be created without a cover image</p>}
           <input
             type="text"
             name="imageURL"
             onChange={this.onURLChange}
             placeholder="Image URL (Optional)"
-            style={{
-              border: 'none',
-              display: 'block',
-              fontSize: '30px',
-              height: '50px',
-              margin: '15px auto',
-              padding: '0 10px',
-              width: '60%',
-            }}
             value={this.state.imgUrl}
+            className="article-form__image"
           />
           {this.props.publishingError && <p>{this.props.publishingError}</p>}
-          <button type="submit">Edit Article</button>
+          <button type="submit" className="button">Edit Article</button>
         </form>
       </div>
     );

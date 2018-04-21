@@ -1,0 +1,18 @@
+.profile{
+  font-family: $sans-pro;  
+  margin: $large-size auto;
+  width: 80%;
+  h2, button{
+    display: inline-block;
+    margin-bottom: $extra-large-size;
+  }
+}
+
+.profile__title{
+  font-size: $font-size-extra-large;
+  margin-right: $extra-large-size;
+}
+
+.profile__list-title{
+  text-align: center;
+}

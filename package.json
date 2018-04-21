@@ -4,6 +4,7 @@
   "description": "a basic medium.com clone",
   "main": "server.js",
   "scripts": {
+    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "test": "mocha tests --timeout 10000",
     "dev-server": "webpack-dev-server --mode development"
   },
@@ -33,6 +34,7 @@
     "eslint": "^4.9.0",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
+    "extract-text-webpack-plugin": "^3.0.2",
     "html-react-parser": "^0.4.3",
     "i": "^0.3.6",
     "jest": "^22.4.2",
@@ -48,6 +50,7 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-textarea-autosize": "^6.1.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",

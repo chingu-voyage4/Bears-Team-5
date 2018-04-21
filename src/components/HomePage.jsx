@@ -7,35 +7,40 @@ import { setCategory, startSetArticles } from '../actions/articles';
 class HomePage extends Component {
   onClick = e => {
     const category = e.target.innerHTML;
-    this.props.setCategory(category);
-    this.props.setArticles();
+    if (category === 'home') {
+      this.props.setArticles();
+    } else {
+      this.props.setArticles(category);
+    }
   }
 
   render() {
     return (
-      <div>
+      <div className="home">
         <nav>
-          <ul>
+          <ul className="home__nav">
             {this.props.categories.map(category => (
-              <li key={Math.floor(Math.random() * 9999)}>
+              <li key={Math.floor(Math.random() * 9999)} className="home__nav-link">
                 <a href="#" onClick={this.onClick} >{category}</a>
               </li>
             ))}
           </ul>
         </nav>
-        <h2>Latest</h2>
-        {this.props.latestArticles.length === 0 ? (
-          <p>No articles to display</p>
-        ) : (
-            this.props.latestArticles.map(article => (
-              <div key={Math.floor(Math.random() * 9999)}>
-                <Link to={`/articles/view/${article.slug}`}>
-                  <h3>{article.title}</h3>
-                  <img src={article.image} alt="article thumbnail" height="300" width="300" />
-                </Link>
-              </div>
-            ))
-          )}
+        <h2 className="home__title">Latest</h2>
+        <div className="article-list">
+          {this.props.latestArticles.length === 0 ? (
+            <p>No articles to display</p>
+          ) : (
+              this.props.latestArticles.map(article => (
+                <div key={Math.floor(Math.random() * 9999)} className="article-list__article">
+                  <Link to={`/articles/view/${article.slug}`}>
+                    <h3 className="article-list__article-title">{article.title}</h3>
+                    <img src={article.image} alt="article thumbnail" className="article-list__article-image" />
+                  </Link>
+                </div>
+              ))
+            )}
+        </div>
       </div>
     );
   }
@@ -49,6 +54,7 @@ HomePage.propTypes = {
 HomePage.defaultProps = {
   lastestArticles: [],
   categories: [
+    'home',
     'technology',
     'culture',
     'entrepreneurship',
@@ -64,12 +70,12 @@ HomePage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  latestArticles: state.articles.feed
+  latestArticles: state.articles.feed,
 });
 
 const mapDispatchToProps = dispatch => ({
   setCategory: category => dispatch(setCategory(category)),
-  setArticles: () => dispatch(startSetArticles())
+  setArticles: (category) => dispatch(startSetArticles(category))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

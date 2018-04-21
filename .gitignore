@@ -22,6 +22,7 @@ yarn-error.log*
 
 # dotenv environment variables file(s)
 .env
+.env.default
 
 #Build generated
 dist/
