@@ -16,29 +16,31 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home">
         <nav>
-          <ul>
+          <ul className="home__nav">
             {this.props.categories.map(category => (
-              <li key={Math.floor(Math.random() * 9999)}>
+              <li key={Math.floor(Math.random() * 9999)} className="home__nav-link">
                 <a href="#" onClick={this.onClick} >{category}</a>
               </li>
             ))}
           </ul>
         </nav>
-        <h2>Latest</h2>
-        {this.props.latestArticles.length === 0 ? (
-          <p>No articles to display</p>
-        ) : (
-            this.props.latestArticles.map(article => (
-              <div key={Math.floor(Math.random() * 9999)}>
-                <Link to={`/articles/view/${article.slug}`}>
-                  <h3>{article.title}</h3>
-                  <img src={article.image} alt="article thumbnail" height="300" width="300" />
-                </Link>
-              </div>
-            ))
-          )}
+        <h2 className="home__title">Latest</h2>
+        <div className="home__article-list">
+          {this.props.latestArticles.length === 0 ? (
+            <p>No articles to display</p>
+          ) : (
+              this.props.latestArticles.map(article => (
+                <div key={Math.floor(Math.random() * 9999)} className="home__article">
+                  <Link to={`/articles/view/${article.slug}`}>
+                    <h3 className="home__article-title">{article.title}</h3>
+                    <img src={article.image} alt="article thumbnail" height="300" width="300" />
+                  </Link>
+                </div>
+              ))
+            )}
+        </div>
       </div>
     );
   }
