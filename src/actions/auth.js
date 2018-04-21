@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setLoginErrors, clearError } from './errors';
+import { setLoginErrors, clearError, setSignUpErrors } from './errors';
 import { setMessage } from './messages';
 
 export const logIn = username => ({
@@ -9,7 +9,7 @@ export const logIn = username => ({
 
 export const startLogIn = (userCredentials) => {
   return (dispatch) => {
-    const url = 'http://localhost:4000/api/login';
+    const url = `${process.env.DB_URL}${'api/login'}`;
     const config = {
       url,
       method: 'post',
@@ -34,7 +34,7 @@ export const startLogIn = (userCredentials) => {
 
 export const startSignUp = (userCredentials) => {
   return (dispatch) => {
-    const url = 'http://localhost:4000/api/register';
+    const url = `${process.env.DB_URL}${'api/register'}`;
     const config = {
       url,
       method: 'post',
@@ -45,13 +45,12 @@ export const startSignUp = (userCredentials) => {
     };
     return axios(config)
       .then((response) => {
-        // dispatch(clearError('loginError'));
+        dispatch(clearError('signUpError'));
         return dispatch(setMessage('Sign up Successful'));
       })
       .catch((error) => {
         const errors = error.response.data.errors;
-        console.log(errors);
-        // dispatch(setLoginErrors(errorMsg));
+        dispatch(setSignUpErrors(errors));
       });
   };
 };
