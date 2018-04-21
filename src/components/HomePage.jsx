@@ -27,15 +27,15 @@ class HomePage extends Component {
           </ul>
         </nav>
         <h2 className="home__title">Latest</h2>
-        <div className="home__article-list">
+        <div className="article-list">
           {this.props.latestArticles.length === 0 ? (
             <p>No articles to display</p>
           ) : (
               this.props.latestArticles.map(article => (
-                <div key={Math.floor(Math.random() * 9999)} className="home__article">
+                <div key={Math.floor(Math.random() * 9999)} className="article-list__article">
                   <Link to={`/articles/view/${article.slug}`}>
-                    <h3 className="home__article-title">{article.title}</h3>
-                    <img src={article.image} alt="article thumbnail" height="300" width="300" />
+                    <h3 className="article-list__article-title">{article.title}</h3>
+                    <img src={article.image} alt="article thumbnail" className="article-list__article-image" />
                   </Link>
                 </div>
               ))
