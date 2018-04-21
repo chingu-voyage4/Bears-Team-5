@@ -4,12 +4,16 @@ export default (state = {}, action) => {
       return { ...state, publishingError: action.publishingError };
     case 'SET_LOGIN_ERROR':
       return { ...state, loginError: action.loginError };
+    case 'SET_SIGN_UP_ERRORS':
+      return { ...state, signUpErrors: action.signUpErrors };
     case 'CLEAR_ERROR':
-      switch (action.errorType){
+      switch (action.errorType) {
         case 'loginError':
-          return {...state, loginError: ''};
+          return { ...state, loginError: '' };
         case 'publishingError':
-          return {...state, publishingError: ''};
+          return { ...state, publishingError: '' };
+        case 'signUpError':
+          return { ...state, signUpErrors: [] };
         default:
           return state;
       }
