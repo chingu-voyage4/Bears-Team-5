@@ -46,7 +46,7 @@ export default class SignUpForm extends Component {
       confirmpassword: this.state.confirmPassword,
       email: this.state.email
     };
-
+    this.props.onSubmit(data);
   };
 
   render() {
