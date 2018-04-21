@@ -10,10 +10,10 @@ export default () => {
   const store = createStore(
     combineReducers({
       articles: articlesReducer,
-      messages: authReducer,
+      messages: messagesReducer,
       errors: errorsReducer
     }),
     composeEnhancers(applyMiddleware(thunk))
-);
+  );
   return store;
 };

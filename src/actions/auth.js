@@ -23,7 +23,7 @@ export const startLogIn = (userCredentials) => {
         dispatch(clearError('loginError'));
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', userCredentials.username);
-        setMessage('Log In Successful');
+        dispatch(setMessage('Log In Successful'));
         return dispatch(logIn(userCredentials.username));
       })
       .catch((error) => {

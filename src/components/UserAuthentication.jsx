@@ -21,7 +21,10 @@ class UserAuthentication extends Component {
   };
 
   onSubmit = userCredentials => {
-    this.props.startLogIn(userCredentials);
+    this.props.startLogIn(userCredentials)
+      .then(() => {
+        this.closeModal();
+      });
   };
 
   render() {
