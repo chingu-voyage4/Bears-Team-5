@@ -71,10 +71,10 @@ router.get('/feeds', optionalAuth, [
                     reject();
                     return;
                   }
-                  
-                  value.username = userResults[0].username;
-                  value.avatar = userResults[0].avatar;
-                  
+                  if (userResults.length > 0) {
+                    value.username = userResults[0].username;
+                    value.avatar = userResults[0].avatar;
+                  }
                   delete value.user_id;
                   resolve(value);
                   return value;
