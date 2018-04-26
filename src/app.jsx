@@ -5,13 +5,12 @@ import configureStore from './store/configureStore';
 import { startSetArticles } from './actions/articles';
 import AppRouter from './routes/AppRouter';
 import './styles/styles.scss';
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
 const template = (
   <Provider store={store}>
-    <div>
-      <AppRouter />
-    </div>
+    <AppRouter />
   </Provider>
 );
 const renderApp = () => {
@@ -21,4 +20,5 @@ const renderApp = () => {
     });
 };
 
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 renderApp();
