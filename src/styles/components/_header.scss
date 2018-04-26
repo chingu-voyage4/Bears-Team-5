@@ -2,7 +2,7 @@
   border-bottom: 1px solid grey;
   display: flex;
   align-items: center;
-  font-family: $serif-pro;
+  font-family: $sans-pro;
   justify-content: space-between;
   margin: 0 auto 30px auto;
   width: 80%;
@@ -10,5 +10,14 @@
 
 .header__title{
   font-size: 2.8rem;
-  font-weight: 800;
+  font-weight: 500;
+}
+
+.header__message{
+  clear: both;
+  width: 100%;
+}
+
+.header__profile-link{
+  margin-right: $small-size;
 }

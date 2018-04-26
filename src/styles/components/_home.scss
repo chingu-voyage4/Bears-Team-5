@@ -1,0 +1,25 @@
+.home{
+  font-family: $sans-pro;
+}
+
+.home__nav{
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  margin: $extra-large-size auto;
+  padding-left: 0;
+}
+
+.home__nav-link{
+  color: $grey;
+  text-transform: uppercase;
+}
+
+.home__title{
+  font-size: $font-size-title;
+  font-weight: 500;
+  margin: $large-size auto;
+  text-align: center;
+  text-transform: uppercase;
+}

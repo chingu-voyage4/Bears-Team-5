@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Modal from 'react-modal';
 
 export default class SignUpForm extends Component {
   state = {
@@ -8,12 +7,7 @@ export default class SignUpForm extends Component {
     email: '',
     password: '',
     confirmPassword: '',
-    modalIsOpen: false,
     errors: []
-  };
-
-  closeModal = () => {
-    this.setState(() => ({ modalIsOpen: false }));
   };
 
   onUsernameChange = e => {
@@ -52,22 +46,7 @@ export default class SignUpForm extends Component {
       confirmpassword: this.state.confirmPassword,
       email: this.state.email
     };
-    const url = 'http://localhost:4000/api/user';
-    axios({
-      url,
-      method: 'post',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        this.setState(() => ({ modalIsOpen: true }));
-      })
-      .catch(error => {
-        const errors = error.response.data.errors.map(error => error.msg);
-        this.setState(() => ({ errors }));
-      });
+    this.props.onSubmit(data);
   };
 
   render() {
@@ -119,14 +98,6 @@ export default class SignUpForm extends Component {
           <br />
           <button type="submit">Submit</button>
         </form>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          contentLabel="Registration successful"
-          onRequestClose={() => this.setState(() => ({ modalIsOpen: false }))}
-        >
-          <a onClick={this.closeModal}>&times;</a>
-          <p>You have successfully registered!</p>
-        </Modal>
       </div>
     );
   }

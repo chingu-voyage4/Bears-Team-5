@@ -1,10 +1,10 @@
-// entry point -> output file
-
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
+
 
 module.exports = {
-  entry: "./src/app.js",
+  entry: "./src/app.jsx",
   output: {
     path: path.join(__dirname, "public"),
     filename: "bundle.js"
@@ -13,7 +13,7 @@ module.exports = {
     rules: [
       {
         loader: "babel-loader",
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/
       },
       {
@@ -33,6 +33,23 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx'],
   },
   plugins: [
-    new Dotenv()
+    new Dotenv(),
+    new webpack.DefinePlugin({
+      "process.env.DB_HOST": JSON.stringify(
+        process.env.DB_HOST
+      ),
+      "process.env.DB_USER": JSON.stringify(
+        process.env.DB_USER
+      ),
+      "process.env.DB_PASSWORD": JSON.stringify(
+        process.env.DB_PASSWORD
+      ),
+      "process.env.DB_NAME": JSON.stringify(
+        process.env.DB_NAME
+      ),
+      "process.env.DB_URL": JSON.stringify(
+        process.env.DB_URL
+      )
+    })
   ]
 };
