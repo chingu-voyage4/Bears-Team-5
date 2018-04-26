@@ -12,6 +12,7 @@ if (process.env.NODE_ENV === 'production') { console.log = function () { }; }
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 app.options('*', cors());
 app.use('/api', users, articles, likes, follows, feeds);
 
