@@ -24,3 +24,10 @@
   padding: $large-size;
   width: 70vh;
 }
+
+.modal__close{
+  float: right;
+  font-weight: bold;
+  font-size: $font-size-medium;
+  text-decoration: none;
+}

@@ -74,7 +74,7 @@ class PageHeader extends Component {
               onRequestClose={() => this.setState(() => ({ modalIsOpen: false }))}
               className="modal"
             >
-              <a onClick={this.closeModal}>&times;</a>
+              <a onClick={this.closeModal} className="modal__close">&times;</a>
               {this.state.modalContent === 'Sign Up' ? (
                 <SignUpForm onSubmit={this.onSignUp} errors={this.props.signUpErrors} />
               ) : (
