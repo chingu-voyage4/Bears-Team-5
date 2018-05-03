@@ -6,8 +6,8 @@ const webpack = require('webpack');
 module.exports = {
   entry: "./src/app.jsx",
   output: {
-    path: path.join(__dirname, "public"),
-    filename: "bundle.js"
+    path: path.join(__dirname, "public", "build"),
+    filename: "bundle.js",
   },
   module: {
     rules: [
@@ -26,7 +26,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     historyApiFallback: true,
-
+    publicPath: "/build/"
   },
   resolve: {
     modules: ['node_modules'],
