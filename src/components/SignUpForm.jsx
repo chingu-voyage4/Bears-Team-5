@@ -52,52 +52,58 @@ export default class SignUpForm extends Component {
   render() {
     return (
       <div>
-        <h3>Sign Up</h3>
-        <form onSubmit={this.onSubmit}>
+        <form className="authentication-form" onSubmit={this.onSubmit}>
+          <h3 className="authentication-form__title">Sign Up</h3>
           {this.state.errors.map((error, index) => (
             <p key={index}>{error.charAt(0).toUpperCase() + error.slice(1)}</p>
           ))}
-          <label htmlFor="username">
-            Username:
+          <div className="authentication-form__row">
+            <label htmlFor="username">
+              Username:
+            </label>
             <input
               type="text"
               name="username"
               value={this.state.username}
               onChange={this.onUsernameChange}
             />
-          </label>
-          <br />
-          <label htmlFor="email">
-            Email:
+          </div>
+          <div className="authentication-form__row">
+            <label htmlFor="email">
+              Email:
+            </label>
             <input
               type="email"
               name="email"
               value={this.state.email}
               onChange={this.onEmailChange}
             />
-          </label>
-          <br />
-          <label htmlFor="password">
-            Password:
+          </div>
+          <div className="authentication-form__row">
+            <label htmlFor="password">
+              Password:
+            </label>
             <input
               type="password"
               name="password"
               value={this.state.password}
               onChange={this.onPasswordChange}
             />
-          </label>
-          <br />
-          <label htmlFor="confirmPassword">
-            Confirm Password:
+          </div>
+          <div className="authentication-form__row">
+            <label htmlFor="confirmPassword">
+              Confirm Password:
+            </label>
             <input
               type="password"
               name="confirmPassword"
               value={this.state.confirmPassword}
               onChange={this.onConfirmPasswordChange}
             />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
+          </div>
+          <div className="authentication-form__button">
+            <button type="submit" className=" button">Submit</button>
+          </div>
         </form>
       </div>
     );
