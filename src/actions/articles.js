@@ -90,11 +90,6 @@ export const startSetArticlesByFollowedAuthors = () => {
   };
 };
 
-export const setCategory = category => ({
-  type: 'SET_CATEGORY',
-  category
-});
-
 export const editArticle = (id, updates) => ({
   type: 'EDIT_ARTICLE',
   id,
