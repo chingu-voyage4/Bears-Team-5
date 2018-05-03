@@ -81,9 +81,4 @@ const mapStateToProps = state => ({
   articles: state.articles.feed,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCategory: category => dispatch(setCategory(category)),
-  setArticles: (category) => dispatch(startSetArticles(category))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage);
