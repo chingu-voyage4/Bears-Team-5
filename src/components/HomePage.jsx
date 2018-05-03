@@ -5,12 +5,20 @@ import { Link } from 'react-router-dom';
 import { setCategory, startSetArticles } from '../actions/articles';
 
 class HomePage extends Component {
+  state = {
+    currentCategory: this.props.articles.all
+  }
+
   onClick = e => {
     const category = e.target.innerHTML;
     if (category === 'home') {
-      this.props.setArticles();
+      this.setState(() => ({
+        currentCategory: this.props.articles.all
+      }))
     } else {
-      this.props.setArticles(category);
+      this.setState(() => ({
+        currentCategory: this.props.articles[category]
+      }))
     }
   }
 
@@ -28,10 +36,10 @@ class HomePage extends Component {
         </nav>
         <h2 className="home__title">Latest</h2>
         <div className="article-list">
-          {this.props.latestArticles.length === 0 ? (
+          {this.state.currentCategory.length === 0 ? (
             <p>No articles to display</p>
           ) : (
-              this.props.latestArticles.map(article => (
+              this.state.currentCategory.map(article => (
                 <div key={Math.floor(Math.random() * 9999)} className="article-list__article">
                   <Link to={`/articles/view/${article.slug}`}>
                     <h3 className="article-list__article-title">{article.title}</h3>
@@ -70,7 +78,7 @@ HomePage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  latestArticles: state.articles.feed,
+  articles: state.articles.feed,
 });
 
 const mapDispatchToProps = dispatch => ({
