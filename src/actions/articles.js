@@ -40,11 +40,10 @@ export const setArticles = articles => ({
 
 export const startSetArticles = (category) => {
   return (dispatch, getState) => {
-    const params = (category ? `?category=${category}` : '');
-    const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
+    const url = `${process.env.DB_URL}${'api/feeds'}`;
     const headers = (localStorage.getItem('token') ? {
-        Authorization: localStorage.getItem('token')
-      } : {});
+      Authorization: localStorage.getItem('token')
+    } : {});
     const config = {
       url,
       method: 'get',
@@ -55,9 +54,10 @@ export const startSetArticles = (category) => {
         const articles = response.data.articles;
         dispatch(setArticles(articles));
       })
-      .catch(error => (
-        console.log(error)
-      ));
+      .catch(error => {
+        console.log(error);
+        console.log(error.response);
+      });
   };
 };
 
@@ -71,9 +71,8 @@ export const startSetArticlesByFollowedAuthors = () => {
     const params = `?followed=${true}`;
     const url = `${process.env.DB_URL}${'api/feeds'}${params}`;
     const headers = (localStorage.getItem('token') ? {
-        Authorization: localStorage.getItem('token')
-      } : {});
-    console.log(url);
+      Authorization: localStorage.getItem('token')
+    } : {});
     const config = {
       url,
       method: 'get',
@@ -82,7 +81,6 @@ export const startSetArticlesByFollowedAuthors = () => {
     return axios(config)
       .then((response) => {
         const articles = response.data.articles;
-        console.log(articles);
         return dispatch(setArticlesByFollowedAuthors(articles));
       })
       .catch(error => (
@@ -109,7 +107,6 @@ export const startEditArticle = (id, updates) => {
       article_id: parseInt(id),
       ...updates
     };
-    console.log(data);
     const config = {
       url,
       method: 'patch',
