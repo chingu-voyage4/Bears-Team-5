@@ -32,9 +32,10 @@ export default class LogInForm extends Component {
   render() {
     return (
       <div>
+        <h3>Log In</h3>
         <form onSubmit={this.onSubmit}>
           {
-            this.props.error && 
+            this.props.error &&
             <p>{this.props.error.charAt(0).toUpperCase() + this.props.error.slice(1)}</p>
           }
           <label htmlFor="username">

@@ -52,6 +52,7 @@ export default class SignUpForm extends Component {
   render() {
     return (
       <div>
+        <h3>Sign Up</h3>
         <form onSubmit={this.onSubmit}>
           {this.state.errors.map((error, index) => (
             <p key={index}>{error.charAt(0).toUpperCase() + error.slice(1)}</p>
