@@ -72,6 +72,7 @@ class PageHeader extends Component {
               isOpen={this.state.modalIsOpen}
               contentLabel={this.state.modalContent}
               onRequestClose={() => this.setState(() => ({ modalIsOpen: false }))}
+              className="modal"
             >
               <a onClick={this.closeModal}>&times;</a>
               {this.state.modalContent === 'Sign Up' ? (
