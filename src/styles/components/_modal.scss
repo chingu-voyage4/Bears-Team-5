@@ -18,11 +18,12 @@
 }
 
 .modal{
-  background-color: rgba($color: #fff, $alpha: 0.8);
+  background-color: #fff;
   border: 1px solid $grey;
-  height: 70vh;
+  border-radius: 5px;
+  min-height: 40vh;
   padding: $large-size;
-  width: 70vh;
+  min-width: 50vh;
 }
 
 .modal__close{
