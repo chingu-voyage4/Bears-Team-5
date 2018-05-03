@@ -1,4 +1,5 @@
 import axios from 'axios';
+import sortArticleByCategory from '../selectors/categories';
 
 export const setError = error => ({
   type: 'SET_ERROR',
@@ -52,7 +53,7 @@ export const startSetArticles = (category) => {
     return axios(config)
       .then((response) => {
         const articles = response.data.articles;
-        dispatch(setArticles(articles));
+        dispatch(setArticles(sortArticleByCategory(articles)));
       })
       .catch(error => {
         console.log(error);
