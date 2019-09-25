@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load();
+  require('dotenv').config();
 }
 
 const pool = mysql.createPool({
