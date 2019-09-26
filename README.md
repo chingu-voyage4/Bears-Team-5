@@ -1,10 +1,15 @@
 # Medium clone
 
-a basic build-to-learn [medium](https://medium.com) clone project, built during the [4th chingu voyage](https://chingu-cohorts.github.io/chingu-directory/) by bears-team-5
+A build-to-learn [medium](https://medium.com) fullstack clone project, built during the [4th chingu voyage](https://chingu-cohorts.github.io/chingu-directory/) by bears-team-5.
+
+due to an unfourntuate series of events, only the backend has been developed successfully, you can try it out at https://medium-clone-api.herokuapp.com using any API testing tool such as [Postman](https://www.getpostman.com/)
 
 ## Charter
 
 read the [charcter document](https://github.com/chingu-voyage4/Bears-Team-5/wiki/Bears-Team-5-Charter) to know more about the MVP, standards, and the proccess followed during the project
+
+## Documentation
+the REST API documentation can be found [here](https://chingu-voyage4.github.io/Bears-Team-5/)
 
 ## Getting Started
 These instructions will get you a copy of the REST API running on your local machine for development and testing purposes.
