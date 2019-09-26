@@ -2,7 +2,7 @@
 
 A build-to-learn [medium](https://medium.com) fullstack clone project, built during the [4th chingu voyage](https://chingu-cohorts.github.io/chingu-directory/) by bears-team-5.
 
-due to an unfourntuate series of events, only the backend has been developed successfully, you can try it out at https://medium-clone-api.herokuapp.com using any API testing tool such as [Postman](https://www.getpostman.com/)
+due to an unfortunate series of events, only the backend has been developed successfully, you can try it out at https://medium-clone-api.herokuapp.com using any API testing tool such as [Postman](https://www.getpostman.com/)
 
 ## Charter
 
