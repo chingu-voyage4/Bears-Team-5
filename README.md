@@ -11,6 +11,12 @@ read the [charcter document](https://github.com/chingu-voyage4/Bears-Team-5/wiki
 ## Documentation
 the REST API documentation can be found [here](https://chingu-voyage4.github.io/Bears-Team-5/)
 
+### Database ERD
+![SQL ERD](/docs/sqlDiagram.png?raw=true)
+
+### Activity diagram
+![webiste activity diagram](/docs/flowchart.png?raw=true)
+
 ## Getting Started
 These instructions will get you a copy of the REST API running on your local machine for development and testing purposes.
 
